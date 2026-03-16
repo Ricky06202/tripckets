@@ -1,0 +1,77 @@
+---
+const socials = [
+  { name: "Facebook", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>` },
+  { name: "Instagram", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>` },
+  { name: "X", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>` },
+  { name: "LinkedIn", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>` },
+  { name: "YouTube", icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="white"></polygon></svg>` }
+];
+
+const exploreLinks = ["Destinos", "Experiencias", "Guias locales", "Blog"];
+const companyLinks = ["Nosotros", "Carreras", "Prensa", "Contacto"];
+---
+
+<footer class="bg-white border-t border-orange-100 py-12 md:py-16" data-aos="fade-up">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
+      <div class="sm:col-span-2 lg:col-span-1" data-aos="fade-up" data-aos-delay="100">
+        <a href="/" class="text-2xl font-bold gradient-text block mb-6">Tripcket</a>
+        
+        <div class="mb-6">
+          <p class="text-sm text-gray-600 mb-3">Suscríbete a nuestro boletín</p>
+          <form class="flex">
+            <input 
+              type="email" 
+              placeholder="Tu email" 
+              class="flex-1 px-4 py-2 rounded-l-lg border border-gray-200 focus:outline-none focus:border-orange-300 text-sm"
+            />
+            <button type="submit" class="px-4 py-2 gradient-button rounded-r-lg text-white">
+              →
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="200">
+        <h4 class="font-semibold mb-4">Explorar</h4>
+        <ul class="space-y-2">
+          {exploreLinks.map(link => (
+            <li>
+              <a href="#" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">{link}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="300">
+        <h4 class="font-semibold mb-4">Empresa</h4>
+        <ul class="space-y-2">
+          {companyLinks.map(link => (
+            <li>
+              <a href="#" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">{link}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="400">
+        <h4 class="font-semibold mb-4">Síguenos</h4>
+        <div class="flex gap-3 flex-wrap">
+          {socials.map(social => (
+            <a 
+              href="#" 
+              class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center text-white hover:opacity-80 transition-opacity"
+              aria-label={social.name}
+            >
+              <Fragment set:html={social.icon} />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-100 pt-8 text-center text-sm text-gray-500" data-aos="fade-up" data-aos-delay="500">
+      <p>© 2026 Tripcket. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>

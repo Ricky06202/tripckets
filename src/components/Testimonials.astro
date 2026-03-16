@@ -1,0 +1,55 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const testimonials = [
+  { 
+    quote: "Mi experiencia con Tripcket fue increíble. Descubrí lugares que nunca habría encontrado por mi cuenta.",
+    author: "María García",
+    location: "Viajera desde Madrid"
+  },
+  { 
+    quote: "La mejor forma de explorar un nuevo destino. Todo estaba perfectamente organizado.",
+    author: "Carlos López",
+    location: "Viajero desde Ciudad de México"
+  },
+  { 
+    quote: "Gracias a Tripcket viví una aventura auténtica. Recomendado 100%.",
+    author: "Ana Martínez",
+    location: "Viajera desde Buenos Aires"
+  }
+];
+---
+
+<section class="py-20 bg-cream-50" data-aos="fade-up">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up" data-aos-delay="100">
+      Historias <span class="gradient-text">reales</span>
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      {testimonials.map((testimonial, index) => (
+        <div class="bg-white rounded-2xl p-8 shadow-sm card-hover flex flex-col" style="min-height: 280px;" data-aos="fade-up" data-aos-delay={200 + (index * 100)}>
+          <div class="flex gap-1 mb-4">
+            {[...Array(5)].map(() => (
+              <Icon name="heroicons:star" class="w-5 h-5" style="color: #F7B538;" />
+            ))}
+          </div>
+          
+          <blockquote class="text-gray-700 mb-6 italic flex-grow">
+            "{testimonial.quote}"
+          </blockquote>
+          
+          <div class="flex items-center gap-4 pt-4 border-t border-gray-100">
+            <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-500 flex-shrink-0">
+              <Icon name="heroicons:user" class="w-6 h-6" />
+            </div>
+            <div>
+              <p class="font-semibold">{testimonial.author}</p>
+              <p class="text-sm text-gray-500">{testimonial.location}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,43 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const problems = [
+  {
+    icon: "heroicons:briefcase",
+    text: "Dificultad para encontrar experiencias auténticas"
+  },
+  {
+    icon: "heroicons:banknotes",
+    text: "Precios inflados por intermediarios"
+  },
+  {
+    icon: "heroicons:user-group",
+    text: "Falta de conexión real con la cultura local"
+  }
+];
+---
+
+<section class="py-20" data-aos="fade-up">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+      Planificar viajes es más difícil de lo que debería ser
+    </h2>
+
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+        {problems.map((problem, index) => (
+          <div class="flex items-start gap-4" data-aos="fade-right" data-aos-delay={200 + (index * 100)}>
+            <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-white flex-shrink-0">
+              <Icon name={problem.icon} class="w-6 h-6" />
+            </div>
+            <p class="text-gray-700 pt-2">{problem.text}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="placeholder-rect aspect-[4/3] rounded-3xl" data-aos="fade-left" data-aos-delay="300">
+        <Icon name="heroicons:photo" class="w-16 h-16 opacity-50" />
+      </div>
+    </div>
+  </div>
+</section>

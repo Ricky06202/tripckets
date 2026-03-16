@@ -1,0 +1,94 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const features = [
+  { 
+    icon: "heroicons:map", 
+    title: "Archipiélagos y playas sin fin",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
+  },
+  { 
+    icon: "heroicons:sparkles", 
+    title: "Selva profunda y aventura real",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
+  },
+  { 
+    icon: "heroicons:home", 
+    title: "Tradiciones Guna vivas",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
+  },
+  { 
+    icon: "heroicons:briefcase", 
+    title: "Pueblos de montaña y café",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
+  }
+];
+---
+
+<section class="py-20 relative overflow-hidden" data-aos="fade-up">
+  <div class="absolute inset-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22 viewBox=%220 0 80 80%22%3E%3Cpath fill=%22none%22 stroke=%22%23000%22 stroke-width=%220.5%22 d=%22M0 40h80M40 0v80M20 20l40 40M60 20L20 60M10 40c0 8 8 14 20 14s20-6 20-14M10 40c0-8 8-14 20-14s20 6 20 14%22/%3E%3Ccircle cx=%2240%22 cy=%2240%22 r=%2215%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%220.5%22/%3E%3Cpath fill=%22none%22 stroke=%22%23000%22 stroke-width=%220.3%22 d=%22M40 25c4 2 7 6 7 11s-3 8-7 9M40 25c-4 2-7 6-7 11s3 8 7 9M40 55c4-2 7-6 7-11s-3-8-7-9M40 55c-4-2-7-6-7-11s3-8 7-9%22/%3E%3C/svg%3E');"></div>
+  
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="text-center mb-12" data-aos="fade-up" data-aos-delay="100">
+      <p class="text-gray-400 text-sm uppercase tracking-widest mb-4">Expansión</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">
+        Panamá entera en tu próximo viaje
+      </h2>
+      <p class="text-gray-500 max-w-2xl mx-auto">
+        Boquete es donde comenzamos, pero el país entero nos llama. Tripckets crecerá hacia cada rincón de Panamá, conectando viajeros con historias que merecen ser vividas en cada región.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-12 gap-8 items-center">
+      <div class="md:col-span-4 grid gap-6">
+        <div class="bg-white p-6 rounded-2xl shadow-sm" data-aos="fade-right" data-aos-delay="200">
+          <div class="w-14 h-14 mb-4 rounded-full gradient-bg flex items-center justify-center text-white">
+            <Icon name={features[0].icon} class="w-7 h-7" />
+          </div>
+          <h3 class="font-semibold text-lg mb-2">{features[0].title}</h3>
+          <p class="text-gray-500 text-sm">{features[0].text}</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm" data-aos="fade-right" data-aos-delay="300">
+          <div class="w-14 h-14 mb-4 rounded-full gradient-bg flex items-center justify-center text-white">
+            <Icon name={features[2].icon} class="w-7 h-7" />
+          </div>
+          <h3 class="font-semibold text-lg mb-2">{features[2].title}</h3>
+          <p class="text-gray-500 text-sm">{features[2].text}</p>
+        </div>
+      </div>
+
+      <div class="md:col-span-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="placeholder-rect aspect-[3/4] rounded-3xl">
+          <Icon name="heroicons:photo" class="w-16 h-16 opacity-50" />
+        </div>
+      </div>
+
+      <div class="md:col-span-4 grid gap-6">
+        <div class="bg-white p-6 rounded-2xl shadow-sm" data-aos="fade-left" data-aos-delay="200">
+          <div class="w-14 h-14 mb-4 rounded-full gradient-bg flex items-center justify-center text-white">
+            <Icon name={features[1].icon} class="w-7 h-7" />
+          </div>
+          <h3 class="font-semibold text-lg mb-2">{features[1].title}</h3>
+          <p class="text-gray-500 text-sm">{features[1].text}</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm" data-aos="fade-left" data-aos-delay="300">
+          <div class="w-14 h-14 mb-4 rounded-full gradient-bg flex items-center justify-center text-white">
+            <Icon name={features[3].icon} class="w-7 h-7" />
+          </div>
+          <h3 class="font-semibold text-lg mb-2">{features[3].title}</h3>
+          <p class="text-gray-500 text-sm">{features[3].text}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-center items-center gap-6 mt-12" data-aos="fade-up" data-aos-delay="500">
+      <a href="#explorar" class="px-8 py-3 gradient-border rounded-full font-medium text-orange-500">
+        Explorar
+      </a>
+      <a href="#mas" class="text-gray-400 hover:text-orange-500 font-medium flex items-center gap-1 transition-colors">
+        Más
+        <Icon name="heroicons:arrow-right" class="w-4 h-4" />
+      </a>
+    </div>
+  </div>
+</section>

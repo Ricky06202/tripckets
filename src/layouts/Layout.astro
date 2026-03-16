@@ -1,23 +1,219 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>Tripcket - Tu boleto para descubrir experiencias auténticas</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
 	</head>
-	<body>
+	<body class="font-sans text-gray-800 bg-white antialiased">
 		<slot />
+		
+		<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+		<script is:inline src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+		<script is:inline>
+			document.addEventListener('DOMContentLoaded', function() {
+				AOS.init({
+					duration: 800,
+					easing: 'ease-out-cubic',
+					once: true,
+					offset: 100,
+					disable: false,
+				});
+			});
+		</script>
 	</body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
+<style is:global>
+	html {
+		scroll-behavior: smooth;
+	}
+
+	::selection {
+		background: linear-gradient(83.21deg, #FF6B35 0%, #F7B538 100%);
+		color: white;
+	}
+
+	.gradient-text {
+		background: linear-gradient(83.21deg, #FF6B35 0%, #F7B538 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.gradient-bg {
+		background: linear-gradient(83.21deg, #FF6B35 0%, #F7B538 100%);
+	}
+
+	.gradient-border {
+		border: 2px solid transparent;
+		background: linear-gradient(white, white) padding-box,
+		            linear-gradient(83.21deg, #FF6B35 0%, #F7B538 100%) border-box;
+	}
+
+	.gradient-button {
+		background: linear-gradient(83.21deg, #FF6B35 0%, #F7B538 100%);
+		color: white;
+		transition: all 0.3s ease;
+	}
+
+	.gradient-button:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+	}
+
+	.gradient-button:active {
+		transform: translateY(0);
+	}
+
+	.placeholder-rect {
+		background: linear-gradient(135deg, #FFF8F0 0%, #F5E6D3 100%);
+		border: 1px dashed #D4C4B0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.placeholder-rect svg {
+		color: #C4913B;
+		opacity: 0.5;
+	}
+
+	.gold-star {
+		color: #F7B538;
+	}
+
+	.organic-shape {
+		position: absolute;
+		border-radius: 50% 40% 60% 50%;
+		opacity: 0.3;
+		filter: blur(60px);
+		z-index: -1;
+		animation: float 20s ease-in-out infinite;
+	}
+
+	@keyframes float {
+		0%, 100% { transform: translate(0, 0) rotate(0deg); }
+		25% { transform: translate(10px, 20px) rotate(5deg); }
+		50% { transform: translate(-5px, 10px) rotate(-3deg); }
+		75% { transform: translate(15px, -10px) rotate(2deg); }
+	}
+
+	.nav-link {
+		position: relative;
+	}
+
+	.nav-link::after {
+		content: '';
+		position: absolute;
+		bottom: -2px;
+		left: 0;
+		width: 0;
+		height: 2px;
+		background: linear-gradient(83.21deg, #FF6B35 0%, #F7B538 100%);
+		transition: width 0.3s ease;
+	}
+
+	.nav-link:hover::after {
 		width: 100%;
-		height: 100%;
+	}
+
+	.card-hover {
+		transition: all 0.3s ease;
+	}
+
+	.card-hover:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 20px 40px rgba(255, 107, 53, 0.1);
+	}
+
+	/* Micro-interacciones para botones secundarios */
+	.gradient-border {
+		transition: all 0.3s ease;
+	}
+
+	.gradient-border:hover {
+		background: linear-gradient(83.21deg, #FF6B35 0%, #F7B538 100%) padding-box,
+		            linear-gradient(83.21deg, #FF6B35 0%, #F7B538 100%) border-box;
+		color: white !important;
+	}
+
+	/* Animación para links */
+	a:not(.nav-link):not(.gradient-button):not(.gradient-border) {
+		position: relative;
+		transition: color 0.3s ease;
+	}
+
+	/* Focus states para accesibilidad */
+	a:focus-visible,
+	button:focus-visible,
+	input:focus-visible {
+		outline: 2px solid #FF6B35;
+		outline-offset: 2px;
+	}
+
+	/* Smooth reveal para secciones - solo cuando AOS aplica */
+	[data-aos="fade-up"] {
+		opacity: 0;
+		transform: translateY(30px);
+		transition-property: opacity, transform;
+	}
+	
+	[data-aos="fade-up"].aos-animate {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	[data-aos="fade-left"] {
+		opacity: 0;
+		transform: translateX(30px);
+		transition-property: opacity, transform;
+	}
+	
+	[data-aos="fade-left"].aos-animate {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	[data-aos="fade-right"] {
+		opacity: 0;
+		transform: translateX(-30px);
+		transition-property: opacity, transform;
+	}
+	
+	[data-aos="fade-right"].aos-animate {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	[data-aos="zoom-in"] {
+		opacity: 0;
+		transform: scale(0.9);
+		transition-property: opacity, transform;
+	}
+	
+	[data-aos="zoom-in"].aos-animate {
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	/* Delay para animaciones secuenciales */
+	.delay-100 { animation-delay: 0.1s; }
+	.delay-200 { animation-delay: 0.2s; }
+	.delay-300 { animation-delay: 0.3s; }
+	.delay-400 { animation-delay: 0.4s; }
+
+	/* Parallax suave en scroll */
+	.parallax-bg {
+		background-attachment: fixed;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
 	}
 </style>
