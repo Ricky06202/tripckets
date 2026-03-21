@@ -18,12 +18,27 @@ src/lib/
   sanity.ts          → Cliente Sanity
   queries.ts         → GROQ queries
   defaultData.ts     → Datos por defecto (fallback)
+  fetchSanity.ts     → Fetch en cliente (live updates)
 
 src/pages/
   index.astro        → Página principal (carga datos del CMS)
+  api/content.ts     → API endpoint para contenido
 
 src/components/
   *.astro            → Componentes UI (estilos, no contenido)
+  LiveContent.astro  → Actualización en tiempo real desde CMS
+```
+
+### Actualización en Tiempo Real
+
+El sitio obtiene datos de Sanity directamente desde el navegador (cliente). No requiere redeploy cuando cambia contenido en CMS.
+
+```
+Flujo:
+1. Página carga con datos por defecto (build time)
+2. JavaScript hace fetch a Sanity API
+3. Actualiza navbar, hero y otros componentes
+4. Usuario ve contenido actualizado sin recargar
 ```
 
 ### Schemas de Sanity (CMS Editable)
@@ -126,3 +141,46 @@ PUBLIC_SANITY_DATASET=production
 - Si Sanity no está configurado, usa `defaultData.ts`
 - Los iconos van en SVG inline, no como imagen
 - Animaciones con `data-aos="fade-up"` etc.
+- Cursor debe ser visible (no `cursor: none`)
+
+### Validación de Datos del CMS
+
+**IMPORTANTE**: Cuando se reciben datos del CMS, SIEMPRE validar que estén completos antes de usar. Si faltan campos, usar fallbacks de `defaultData.ts`.
+
+```javascript
+// Ejemplo de validación en index.astro:
+const hasValidFeatures = sanityData.features && 
+  Array.isArray(sanityData.features) && 
+  sanityData.features.length > 0 &&
+  sanityData.features[0]?.icon;
+
+features: hasValidFeatures ? sanityData.features : defaultData.features;
+```
+
+Validar cada sección antes de usar datos del CMS:
+
+| Sección | Validación mínima |
+|---------|-------------------|
+| `siteSettings` | `navbarLinks?.length > 0` |
+| `hero` | `hero?.title` existe |
+| `features` | Array con items que tienen `icon` |
+| `problems` | Array tiene `length > 0` |
+| `solution` | `solution?.title` existe |
+| `processSteps` | Array tiene `length > 0` |
+| `expansionFeatures` | Array con items que tienen `icon` |
+| `benefits` | Array tiene `length > 0` |
+| `impacts` | Array tiene `length > 0` |
+| `testimonials` | Array tiene `length > 0` |
+
+### Paleta de Colores
+
+Colores principales del sitio:
+
+| Color | Hex | Uso |
+|-------|-----|-----|
+| Amarillo suave | `#fff7ad` | Fondo gradiente |
+| Verde azulado | `#92cdcf` | Fondo gradiente |
+| Texto oscuro | `#333` | Botones, texto principal |
+| Texto gris | `#666` | Texto secundario |
+
+**Regla**: NO usar naranja (#C4913B, #F7B538) ni texto blanco (#fff) sobre fondos gradiente. El texto debe ser oscuro para legibilidad.
