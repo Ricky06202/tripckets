@@ -1,17 +1,38 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-const bullets = [
-  "Un solo boleto para todo tu viaje",
-  "Experiencias curadas por locales",
-  "Sin intermediarios, sin sorpresas"
+interface CTAButton {
+  text: string;
+  url: string;
+}
+
+interface Props {
+  data?: {
+    title?: string;
+    description?: string;
+    bullets?: string[];
+    ctaPrimary?: CTAButton;
+    ctaSecondary?: CTAButton;
+  };
+}
+
+const { data } = Astro.props;
+
+const title = data?.title || 'Todo en un solo boleto personalizado';
+const description = data?.description || 'Con Tripcket, cada detalle de tu viaje está cuidado. Desde la llegada hasta la partida, tienes todo programado y reservado en un solo lugar.';
+const bullets = data?.bullets || [
+  'Un solo boleto para todo tu viaje',
+  'Experiencias curadas por locales',
+  'Sin intermediarios, sin sorpresas',
 ];
+const ctaPrimary = data?.ctaPrimary || { text: 'Explorar', url: '/explorar' };
+const ctaSecondary = data?.ctaSecondary || { text: 'Más', url: '/mas' };
 ---
 
 <section class="py-20 bg-cream-50" data-aos="fade-up">
   <div class="max-w-7xl mx-auto px-6">
     <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up" data-aos-delay="100">
-      Todo en un solo <span class="gradient-text">boleto personalizado</span>
+      {title}
     </h2>
 
     <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -21,7 +42,7 @@ const bullets = [
 
       <div class="order-1 lg:order-2" data-aos="fade-left" data-aos-delay="300">
         <p class="text-lg text-gray-700 mb-6">
-          Con Tripcket, cada detalle de tu viaje está cuidado. Desde la llegada hasta la partida, tienes todo programado y reservado en un solo lugar.
+          {description}
         </p>
         
         <ul class="space-y-4 mb-8">
@@ -36,9 +57,9 @@ const bullets = [
         </ul>
 
         <div class="flex flex-wrap gap-4">
-          <a href="#explorar" class="px-6 py-3 gradient-button rounded-full font-medium">Explorar</a>
-          <a href="#mas" class="px-6 py-3 text-orange-500 font-medium flex items-center gap-1 hover:gap-2 transition-all">
-            Más
+          <a href={ctaPrimary.url} class="px-6 py-3 gradient-button rounded-full font-medium">{ctaPrimary.text}</a>
+          <a href={ctaSecondary.url} class="px-6 py-3 text-orange-500 font-medium flex items-center gap-1 hover:gap-2 transition-all">
+            {ctaSecondary.text}
             <Icon name="heroicons:arrow-right" class="w-4 h-4" />
           </a>
         </div>

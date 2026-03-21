@@ -1,36 +1,38 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-const features = [
-  {
-    icon: "heroicons:briefcase",
-    title: "Experiencias únicas",
-    description: "Descubre lugares auténticos que solo los locales conocen."
-  },
-  {
-    icon: "heroicons:map",
-    title: "Gastronomía local",
-    description: "Saborea la verdadera cocina tradicional de cada destino."
-  },
-  {
-    icon: "heroicons:sparkles",
-    title: "Aventura guiada",
-    description: "Explora con expertos que conocen cada rincón del lugar."
-  }
+interface Feature {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  title?: string;
+  features?: Feature[];
+}
+
+const { title, features } = Astro.props;
+
+const sectionTitle = title || 'Lo que Tripckets hace por ti';
+const sectionFeatures = features || [
+  { icon: 'briefcase', title: 'Experiencias únicas', description: 'Descubre lugares auténticos que solo los locales conocen.' },
+  { icon: 'map', title: 'Gastronomía local', description: 'Saborea la verdadera cocina tradicional de cada destino.' },
+  { icon: 'sparkles', title: 'Aventura guiada', description: 'Explora con expertos que conocen cada rincón del lugar.' },
 ];
 ---
 
 <section class="py-20 bg-cream-50" data-aos="fade-up" data-aos-delay="100">
   <div class="max-w-7xl mx-auto px-6">
     <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up" data-aos-delay="200">
-      Lo que <span class="gradient-text">Tripckets</span> hace por ti
+      {sectionTitle}
     </h2>
 
     <div class="grid md:grid-cols-3 gap-8">
-      {features.map((feature, index) => (
+      {sectionFeatures.map((feature, index) => (
         <div class="text-center p-8 card-hover bg-white rounded-2xl shadow-sm" data-aos="fade-up" data-aos-delay={300 + (index * 100)}>
           <div class="w-16 h-16 mx-auto mb-6 rounded-full gradient-bg flex items-center justify-center text-white">
-            <Icon name={feature.icon} class="w-8 h-8" />
+            <Icon name={`heroicons:${feature.icon}`} class="w-8 h-8" />
           </div>
           <h3 class="text-xl font-semibold mb-3">{feature.title}</h3>
           <p class="text-gray-600">{feature.description}</p>

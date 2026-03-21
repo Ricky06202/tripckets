@@ -15,24 +15,47 @@ import Benefits from '../components/Benefits.astro';
 import Impact from '../components/Impact.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Footer from '../components/Footer.astro';
+import { defaultData } from '../lib/defaultData';
+
+let pageData = defaultData;
+
+try {
+  const { getAllPageData } = await import('../lib/queries');
+  const sanityData = await getAllPageData();
+  if (sanityData) {
+    pageData = {
+      ...sanityData,
+      expansionFeatures: sanityData.expansionData?.features || defaultData.expansionFeatures,
+      expansion: sanityData.expansionData?.settings || defaultData.expansion,
+    };
+  }
+} catch (e) {
+  console.log('Using default data (Sanity not configured)');
+}
 ---
 
 <Layout>
-	<Header />
+	<Header data={pageData.siteSettings} />
 	<main>
-		<Hero />
-		<CoreValue />
-		<Problem />
-		<Solution />
-		<Process />
-		<Personalization />
-		<Examples />
-		<Destination />
-		<EarlyAccess />
-		<Expansion />
-		<Benefits />
-		<Impact />
-		<Testimonials />
+		<Hero data={pageData.hero} />
+		<CoreValue 
+			title={pageData.coreValue?.title} 
+			features={pageData.features} 
+		/>
+		<Problem problems={pageData.problems} />
+		<Solution data={pageData.solution} />
+		<Process steps={pageData.processSteps} />
+		<Personalization data={pageData.personalization} />
+		<Examples travelers={pageData.travelerTypes} />
+		<Destination data={pageData.destination} />
+		<EarlyAccess data={pageData.earlyAccess} />
+		<Expansion 
+			data={pageData.expansion} 
+			features={pageData.expansionFeatures} 
+		/>
+		<Benefits benefits={pageData.benefits} />
+		<Impact impacts={pageData.impacts} />
+		<Testimonials testimonials={pageData.testimonials} />
 	</main>
-	<Footer />
+	<Footer data={pageData.siteSettings} />
 </Layout>

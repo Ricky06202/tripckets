@@ -1,19 +1,21 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-const problems = [
-  {
-    icon: "heroicons:briefcase",
-    text: "Dificultad para encontrar experiencias auténticas"
-  },
-  {
-    icon: "heroicons:banknotes",
-    text: "Precios inflados por intermediarios"
-  },
-  {
-    icon: "heroicons:user-group",
-    text: "Falta de conexión real con la cultura local"
-  }
+interface Problem {
+  icon: string;
+  text: string;
+}
+
+interface Props {
+  problems?: Problem[];
+}
+
+const { problems } = Astro.props;
+
+const sectionProblems = problems || [
+  { icon: 'briefcase', text: 'Dificultad para encontrar experiencias auténticas' },
+  { icon: 'banknotes', text: 'Precios inflados por intermediarios' },
+  { icon: 'user-group', text: 'Falta de conexión real con la cultura local' },
 ];
 ---
 
@@ -25,10 +27,10 @@ const problems = [
 
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <div class="space-y-6">
-        {problems.map((problem, index) => (
+        {sectionProblems.map((problem, index) => (
           <div class="flex items-start gap-4" data-aos="fade-right" data-aos-delay={200 + (index * 100)}>
             <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-white flex-shrink-0">
-              <Icon name={problem.icon} class="w-6 h-6" />
+              <Icon name={`heroicons:${problem.icon}`} class="w-6 h-6" />
             </div>
             <p class="text-gray-700 pt-2">{problem.text}</p>
           </div>

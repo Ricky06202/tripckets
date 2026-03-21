@@ -1,22 +1,22 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-const testimonials = [
-  { 
-    quote: "Mi experiencia con Tripcket fue increíble. Descubrí lugares que nunca habría encontrado por mi cuenta.",
-    author: "María García",
-    location: "Viajera desde Madrid"
-  },
-  { 
-    quote: "La mejor forma de explorar un nuevo destino. Todo estaba perfectamente organizado.",
-    author: "Carlos López",
-    location: "Viajero desde Ciudad de México"
-  },
-  { 
-    quote: "Gracias a Tripcket viví una aventura auténtica. Recomendado 100%.",
-    author: "Ana Martínez",
-    location: "Viajera desde Buenos Aires"
-  }
+interface Testimonial {
+  quote: string;
+  author: string;
+  location: string;
+}
+
+interface Props {
+  testimonials?: Testimonial[];
+}
+
+const { testimonials } = Astro.props;
+
+const sectionTestimonials = testimonials || [
+  { quote: 'Mi experiencia con Tripcket fue increíble. Descubrí lugares que nunca habría encontrado por mi cuenta.', author: 'María García', location: 'Viajera desde Madrid' },
+  { quote: 'La mejor forma de explorar un nuevo destino. Todo estaba perfectamente organizado.', author: 'Carlos López', location: 'Viajero desde Ciudad de México' },
+  { quote: 'Gracias a Tripcket viví una aventura auténtica. Recomendado 100%.', author: 'Ana Martínez', location: 'Viajera desde Buenos Aires' },
 ];
 ---
 
@@ -27,7 +27,7 @@ const testimonials = [
     </h2>
 
     <div class="grid md:grid-cols-3 gap-8">
-      {testimonials.map((testimonial, index) => (
+      {sectionTestimonials.map((testimonial, index) => (
         <div class="bg-white rounded-2xl p-8 shadow-sm card-hover flex flex-col" style="min-height: 280px;" data-aos="fade-up" data-aos-delay={200 + (index * 100)}>
           <div class="flex gap-1 mb-4">
             {[...Array(5)].map(() => (

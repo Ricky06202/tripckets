@@ -1,11 +1,22 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-const travelers = [
-  { title: "Aventura en la naturaleza", description: "Explora senderos y paisajes únicos." },
-  { title: "Escape cultural", description: "Sumérgete en historia y tradiciones." },
-  { title: "Relax playero", description: "Disfruta de las mejores playas." },
-  { title: "Gastronomía local", description: "Saborea platos típicos auténticos." }
+interface Traveler {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  travelers?: Traveler[];
+}
+
+const { travelers } = Astro.props;
+
+const sectionTravelers = travelers || [
+  { title: 'Aventura en la naturaleza', description: 'Explora senderos y paisajes únicos.' },
+  { title: 'Escape cultural', description: 'Sumérgete en historia y tradiciones.' },
+  { title: 'Relax playero', description: 'Disfruta de las mejores playas.' },
+  { title: 'Gastronomía local', description: 'Saborea platos típicos auténticos.' },
 ];
 ---
 
@@ -16,7 +27,7 @@ const travelers = [
     </h2>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {travelers.map((traveler, index) => (
+      {sectionTravelers.map((traveler, index) => (
         <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover" data-aos="fade-up" data-aos-delay={200 + (index * 100)}>
           <div class="placeholder-rect aspect-[4/3]">
             <Icon name="heroicons:photo" class="w-8 h-8 opacity-50" />

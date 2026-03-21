@@ -1,17 +1,40 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-const bullets = [
-  "Playas pristine y arrecifes de coral",
-  "Selva tropical con biodiversidad única",
-  "Cultura guna y tradiciones ancestrales"
+interface CTAButton {
+  text: string;
+  url: string;
+}
+
+interface Props {
+  data?: {
+    title?: string;
+    subtitle?: string;
+    description?: string;
+    bullets?: string[];
+    ctaPrimary?: CTAButton;
+    ctaSecondary?: CTAButton;
+  };
+}
+
+const { data } = Astro.props;
+
+const title = data?.title || 'Boquete, Panamá te espera';
+const subtitle = data?.subtitle || 'Panamá';
+const description = data?.description || 'Descubre Boquete, un paraíso escondido en las tierras altas de Panamá. Con su clima perfecto, paisajes espectaculares y comunidad acogedora, es el destino ideal para tu próximo Tripcket.';
+const bullets = data?.bullets || [
+  'Playas pristine y arrecifes de coral',
+  'Selva tropical con biodiversidad única',
+  'Cultura guna y tradiciones ancestrales',
 ];
+const ctaPrimary = data?.ctaPrimary || { text: 'Descubrir', url: '/descubrir' };
+const ctaSecondary = data?.ctaSecondary || { text: 'Más', url: '/mas' };
 ---
 
 <section class="py-20 bg-cream-50" data-aos="fade-up">
   <div class="max-w-7xl mx-auto px-6">
     <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up" data-aos-delay="100">
-      Boquete, <span class="gradient-text">Panamá</span> te espera
+      {title}
     </h2>
 
     <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -21,7 +44,7 @@ const bullets = [
 
       <div class="order-1 lg:order-2" data-aos="fade-left" data-aos-delay="300">
         <p class="text-lg text-gray-700 mb-6">
-          Descubre Boquete, un paraíso escondido en las tierras altas de Panamá. Con su clima perfecto, paisajes espectaculares y comunidad acogedora, es el destino ideal para tu próximo Tripcket.
+          {description}
         </p>
         
         <ul class="space-y-3 mb-8">
@@ -36,9 +59,9 @@ const bullets = [
         </ul>
 
         <div class="flex flex-wrap gap-4">
-          <a href="#descubrir" class="px-6 py-3 gradient-button rounded-full font-medium">Descubrir</a>
-          <a href="#mas" class="px-6 py-3 text-orange-500 font-medium flex items-center gap-1 hover:gap-2 transition-all">
-            Más
+          <a href={ctaPrimary.url} class="px-6 py-3 gradient-button rounded-full font-medium">{ctaPrimary.text}</a>
+          <a href={ctaSecondary.url} class="px-6 py-3 text-orange-500 font-medium flex items-center gap-1 hover:gap-2 transition-all">
+            {ctaSecondary.text}
             <Icon name="heroicons:arrow-right" class="w-4 h-4" />
           </a>
         </div>

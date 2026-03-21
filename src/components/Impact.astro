@@ -1,22 +1,22 @@
 ---
 import { Icon } from 'astro-icon/components';
 
-const impacts = [
-  { 
-    icon: "heroicons:heart",
-    title: "Impacto económico local",
-    description: "Cada viaje beneficia directamente a las comunidades locales."
-  },
-  { 
-    icon: "heroicons:user-group",
-    title: "Conservación cultural",
-    description: "Apoyamos tradiciones y artesanos locales."
-  },
-  { 
-    icon: "heroicons:shield-check",
-    title: "Turismo sostenible",
-    description: "Practicas responsables con el medio ambiente."
-  }
+interface Impact {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  impacts?: Impact[];
+}
+
+const { impacts } = Astro.props;
+
+const sectionImpacts = impacts || [
+  { icon: 'heart', title: 'Impacto económico local', description: 'Cada viaje beneficia directamente a las comunidades locales.' },
+  { icon: 'user-group', title: 'Conservación cultural', description: 'Apoyamos tradiciones y artesanos locales.' },
+  { icon: 'shield-check', title: 'Turismo sostenible', description: 'Practicas responsables con el medio ambiente.' },
 ];
 ---
 
@@ -29,10 +29,10 @@ const impacts = [
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <div>
         <div class="space-y-6">
-          {impacts.map((impact, index) => (
+          {sectionImpacts.map((impact, index) => (
             <div class="flex items-start gap-4" data-aos="fade-right" data-aos-delay={200 + (index * 100)}>
               <div class="w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-white flex-shrink-0">
-                <Icon name={impact.icon} class="w-6 h-6" />
+                <Icon name={`heroicons:${impact.icon}`} class="w-6 h-6" />
               </div>
               <div>
                 <h3 class="font-semibold text-lg mb-1">{impact.title}</h3>

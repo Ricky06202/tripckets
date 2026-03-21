@@ -1,5 +1,28 @@
 ---
 import { Icon } from 'astro-icon/components';
+
+interface Props {
+  data?: {
+    navbarLinks?: Array<{ title: string; url: string }>;
+    navbarCtaPrimary?: { text: string; url: string };
+    navbarCtaSecondary?: { text: string; url: string };
+  };
+}
+
+const { data } = Astro.props;
+
+const links = data?.navbarLinks || [
+  { title: 'Inicio', url: '/' },
+  { title: 'Ejemplo de Tripcket', url: '/ejemplo' },
+  { title: 'Blog', url: '/blog' },
+  { title: 'Destinos', url: '/destinos' },
+  { title: 'Experiencias', url: '/experiencias' },
+  { title: 'Empresa', url: '/empresa' },
+  { title: 'Contacto', url: '/contacto' },
+];
+
+const ctaPrimary = data?.navbarCtaPrimary || { text: 'Ingresar', url: '/ingresar' };
+const ctaSecondary = data?.navbarCtaSecondary || { text: 'Crear', url: '/crear' };
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-orange-100">
@@ -7,9 +30,9 @@ import { Icon } from 'astro-icon/components';
     <a href="/" class="text-2xl font-bold gradient-text">Tripcket</a>
     
     <div class="hidden md:flex items-center gap-8">
-      <a href="#inicio" class="nav-link text-sm text-gray-600 hover:text-gray-900">Inicio</a>
-      <a href="#ejemplo" class="nav-link text-sm text-gray-600 hover:text-gray-900">Ejemplo de Tripcket</a>
-      <a href="#blog" class="nav-link text-sm text-gray-600 hover:text-gray-900">Blog</a>
+      {links.map(link => (
+        <a href={link.url} class="nav-link text-sm text-gray-600 hover:text-gray-900">{link.title}</a>
+      ))}
       <div class="relative group">
         <button class="nav-link text-sm text-gray-600 hover:text-gray-900 flex items-center gap-1">
           Más
@@ -19,8 +42,8 @@ import { Icon } from 'astro-icon/components';
     </div>
 
     <div class="flex items-center gap-3">
-      <a href="#ingresar" class="px-4 py-2 text-sm gradient-border rounded-full text-orange-500 font-medium">Ingresar</a>
-      <a href="#crear" class="px-4 py-2 text-sm gradient-button rounded-full font-medium">Crear</a>
+      <a href={ctaPrimary.url} class="px-4 py-2 text-sm gradient-border rounded-full text-orange-500 font-medium">{ctaPrimary.text}</a>
+      <a href={ctaSecondary.url} class="px-4 py-2 text-sm gradient-button rounded-full font-medium">{ctaSecondary.text}</a>
     </div>
   </div>
 </nav>
