@@ -35,11 +35,14 @@ try {
       sanityData.expansionData.features.length > 0 &&
       sanityData.expansionData.features[0]?.icon;
     
+    const hasValidSiteSettings = sanityData.siteSettings?.navbarLinks?.length > 0;
+    
     pageData = {
       ...defaultData,
-      ...sanityData,
+      ...(hasValidSiteSettings ? { siteSettings: sanityData.siteSettings } : {}),
+      hero: sanityData.hero?.title ? sanityData.hero : defaultData.hero,
       expansionFeatures: hasValidExpansionFeatures ? sanityData.expansionData.features : defaultData.expansionFeatures,
-      expansion: sanityData.expansionData?.settings || defaultData.expansion,
+      expansion: sanityData.expansionData?.settings?.title ? sanityData.expansionData.settings : defaultData.expansion,
       features: hasValidFeatures ? sanityData.features : defaultData.features,
       problems: sanityData.problems?.length ? sanityData.problems : defaultData.problems,
       solution: sanityData.solution?.title ? sanityData.solution : defaultData.solution,
