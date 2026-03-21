@@ -24,22 +24,32 @@ try {
   const sanityData = await getAllPageData();
   
   if (sanityData && sanityData.siteSettings) {
+    const hasValidFeatures = sanityData.features && 
+      Array.isArray(sanityData.features) && 
+      sanityData.features.length > 0 &&
+      sanityData.features[0]?.icon;
+    
+    const hasValidExpansionFeatures = sanityData.expansionData?.features && 
+      Array.isArray(sanityData.expansionData.features) && 
+      sanityData.expansionData.features.length > 0 &&
+      sanityData.expansionData.features[0]?.icon;
+    
     pageData = {
       ...defaultData,
       ...sanityData,
-      expansionFeatures: sanityData.expansionData?.features || defaultData.expansionFeatures,
+      expansionFeatures: hasValidExpansionFeatures ? sanityData.expansionData.features : defaultData.expansionFeatures,
       expansion: sanityData.expansionData?.settings || defaultData.expansion,
-      features: sanityData.features || defaultData.features,
-      problems: sanityData.problems || defaultData.problems,
-      solution: sanityData.solution || defaultData.solution,
-      processSteps: sanityData.processSteps || defaultData.processSteps,
-      personalization: sanityData.personalization || defaultData.personalization,
-      travelerTypes: sanityData.travelerTypes || defaultData.travelerTypes,
-      destination: sanityData.destination || defaultData.destination,
-      earlyAccess: sanityData.earlyAccess || defaultData.earlyAccess,
-      benefits: sanityData.benefits || defaultData.benefits,
-      impacts: sanityData.impacts || defaultData.impacts,
-      testimonials: sanityData.testimonials || defaultData.testimonials,
+      features: hasValidFeatures ? sanityData.features : defaultData.features,
+      problems: sanityData.problems?.length ? sanityData.problems : defaultData.problems,
+      solution: sanityData.solution?.title ? sanityData.solution : defaultData.solution,
+      processSteps: sanityData.processSteps?.length ? sanityData.processSteps : defaultData.processSteps,
+      personalization: sanityData.personalization?.title ? sanityData.personalization : defaultData.personalization,
+      travelerTypes: sanityData.travelerTypes?.length ? sanityData.travelerTypes : defaultData.travelerTypes,
+      destination: sanityData.destination?.title ? sanityData.destination : defaultData.destination,
+      earlyAccess: sanityData.earlyAccess?.title ? sanityData.earlyAccess : defaultData.earlyAccess,
+      benefits: sanityData.benefits?.length ? sanityData.benefits : defaultData.benefits,
+      impacts: sanityData.impacts?.length ? sanityData.impacts : defaultData.impacts,
+      testimonials: sanityData.testimonials?.length ? sanityData.testimonials : defaultData.testimonials,
     };
   }
 } catch (e) {
