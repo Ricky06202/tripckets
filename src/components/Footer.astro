@@ -50,7 +50,7 @@ const socials = data?.socials || [
 const copyright = data?.copyright || '© 2026 Tripcket. Todos los derechos reservados.';
 ---
 
-<footer class="bg-white border-t border-orange-100 py-12 md:py-16" data-aos="fade-up">
+<footer class="bg-white border-t border-[#92cdcf]/20 py-12 md:py-16" data-aos="fade-up">
   <div class="max-w-7xl mx-auto px-6">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
       <div class="sm:col-span-2 lg:col-span-1" data-aos="fade-up" data-aos-delay="100">
@@ -62,7 +62,7 @@ const copyright = data?.copyright || '© 2026 Tripcket. Todos los derechos reser
             <input 
               type="email" 
               placeholder="Tu email" 
-              class="flex-1 px-4 py-2 rounded-l-lg border border-gray-200 focus:outline-none focus:border-orange-300 text-sm"
+              class="flex-1 px-4 py-2 rounded-l-lg border border-gray-200 focus:outline-none focus:border-[#92cdcf] text-sm"
             />
             <button type="submit" class="px-4 py-2 gradient-button rounded-r-lg text-white">
               →
@@ -77,7 +77,7 @@ const copyright = data?.copyright || '© 2026 Tripcket. Todos los derechos reser
           <ul class="space-y-2">
             {column.links.map(link => (
               <li>
-                <a href="#" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">{link}</a>
+                <a href="#" class="text-gray-600 hover:gradient-text transition-colors text-sm">{link}</a>
               </li>
             ))}
           </ul>
