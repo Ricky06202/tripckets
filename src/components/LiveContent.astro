@@ -1,0 +1,84 @@
+---
+---
+
+<script is:inline>
+(async function() {
+  const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
+  const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
+  
+  if (!projectId || projectId === 'TU_PROJECT_ID') return;
+
+  async function fetchFromSanity(query) {
+    const url = `https://${projectId}.api.sanity.io/v2024-01-01/data/query/${dataset}?query=${encodeURIComponent(query)}`;
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      return data.result;
+    } catch (e) {
+      console.log('Sanity fetch error:', e);
+      return null;
+    }
+  }
+
+  const siteSettings = await fetchFromSanity('*[_type == "siteSettings"][0]');
+
+  if (siteSettings) {
+    if (siteSettings.navbarLinks && siteSettings.navbarLinks.length > 0) {
+      const nav = document.getElementById('site-nav');
+      if (nav) {
+        const linksContainer = nav.querySelector('[class*="hidden md:flex"]');
+        if (linksContainer) {
+          const links = linksContainer.querySelectorAll('[data-nav-link]');
+          siteSettings.navbarLinks.forEach((link, i) => {
+            if (links[i]) {
+              links[i].textContent = link.title;
+              if (link.url) links[i].href = link.url;
+            }
+          });
+        }
+      }
+    }
+
+    if (siteSettings.navbarCtaPrimary) {
+      const ctaPrimary = document.querySelector('[data-nav-cta-primary]');
+      if (ctaPrimary) {
+        ctaPrimary.textContent = siteSettings.navbarCtaPrimary.text || ctaPrimary.textContent;
+        if (siteSettings.navbarCtaPrimary.url) ctaPrimary.href = siteSettings.navbarCtaPrimary.url;
+      }
+    }
+
+    if (siteSettings.navbarCtaSecondary) {
+      const ctaSecondary = document.querySelector('[data-nav-cta-secondary]');
+      if (ctaSecondary) {
+        ctaSecondary.textContent = siteSettings.navbarCtaSecondary.text || ctaSecondary.textContent;
+        if (siteSettings.navbarCtaSecondary.url) ctaSecondary.href = siteSettings.navbarCtaSecondary.url;
+      }
+    }
+  }
+
+  const hero = await fetchFromSanity('*[_type == "hero"][0]');
+  if (hero) {
+    const heroSection = document.getElementById('inicio');
+    if (heroSection) {
+      const h1 = heroSection.querySelector('h1');
+      if (h1 && hero.title) h1.textContent = hero.title;
+
+      const subtitle = heroSection.querySelector('p.text-base');
+      if (subtitle && hero.subtitle) subtitle.textContent = hero.subtitle;
+
+      const badge = heroSection.querySelector('[class*="gradient-bg"] p');
+      if (badge && hero.badgeText) badge.textContent = hero.badgeText;
+
+      const buttons = heroSection.querySelectorAll('a.gradient-button, a.gradient-border');
+      if (hero.ctaButtons && buttons.length > 0) {
+        buttons.forEach((btn, i) => {
+          if (hero.ctaButtons[i]) {
+            btn.textContent = hero.ctaButtons[i].text || btn.textContent;
+            if (hero.ctaButtons[i].url) btn.href = hero.ctaButtons[i].url;
+          }
+        });
+      }
+    }
+  }
+})();
+</script>

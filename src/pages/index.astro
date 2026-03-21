@@ -15,6 +15,7 @@ import Benefits from '../components/Benefits.astro';
 import Impact from '../components/Impact.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Footer from '../components/Footer.astro';
+import LiveContent from '../components/LiveContent.astro';
 import { defaultData } from '../lib/defaultData';
 
 let pageData = { ...defaultData };
@@ -81,4 +82,5 @@ try {
     <Testimonials testimonials={pageData.testimonials} />
   </main>
   <Footer data={pageData.siteSettings} />
+  <LiveContent />
 </Layout>
