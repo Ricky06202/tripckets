@@ -17,16 +17,29 @@ import Testimonials from '../components/Testimonials.astro';
 import Footer from '../components/Footer.astro';
 import { defaultData } from '../lib/defaultData';
 
-let pageData = defaultData;
+let pageData = { ...defaultData };
 
 try {
   const { getAllPageData } = await import('../lib/queries');
   const sanityData = await getAllPageData();
-  if (sanityData) {
+  
+  if (sanityData && sanityData.siteSettings) {
     pageData = {
+      ...defaultData,
       ...sanityData,
       expansionFeatures: sanityData.expansionData?.features || defaultData.expansionFeatures,
       expansion: sanityData.expansionData?.settings || defaultData.expansion,
+      features: sanityData.features || defaultData.features,
+      problems: sanityData.problems || defaultData.problems,
+      solution: sanityData.solution || defaultData.solution,
+      processSteps: sanityData.processSteps || defaultData.processSteps,
+      personalization: sanityData.personalization || defaultData.personalization,
+      travelerTypes: sanityData.travelerTypes || defaultData.travelerTypes,
+      destination: sanityData.destination || defaultData.destination,
+      earlyAccess: sanityData.earlyAccess || defaultData.earlyAccess,
+      benefits: sanityData.benefits || defaultData.benefits,
+      impacts: sanityData.impacts || defaultData.impacts,
+      testimonials: sanityData.testimonials || defaultData.testimonials,
     };
   }
 } catch (e) {
@@ -35,27 +48,27 @@ try {
 ---
 
 <Layout>
-	<Header data={pageData.siteSettings} />
-	<main>
-		<Hero data={pageData.hero} />
-		<CoreValue 
-			title={pageData.coreValue?.title} 
-			features={pageData.features} 
-		/>
-		<Problem problems={pageData.problems} />
-		<Solution data={pageData.solution} />
-		<Process steps={pageData.processSteps} />
-		<Personalization data={pageData.personalization} />
-		<Examples travelers={pageData.travelerTypes} />
-		<Destination data={pageData.destination} />
-		<EarlyAccess data={pageData.earlyAccess} />
-		<Expansion 
-			data={pageData.expansion} 
-			features={pageData.expansionFeatures} 
-		/>
-		<Benefits benefits={pageData.benefits} />
-		<Impact impacts={pageData.impacts} />
-		<Testimonials testimonials={pageData.testimonials} />
-	</main>
-	<Footer data={pageData.siteSettings} />
+  <Header data={pageData.siteSettings} />
+  <main>
+    <Hero data={pageData.hero} />
+    <CoreValue 
+      title={pageData.coreValue?.title} 
+      features={pageData.features} 
+    />
+    <Problem problems={pageData.problems} />
+    <Solution data={pageData.solution} />
+    <Process steps={pageData.processSteps} />
+    <Personalization data={pageData.personalization} />
+    <Examples travelers={pageData.travelerTypes} />
+    <Destination data={pageData.destination} />
+    <EarlyAccess data={pageData.earlyAccess} />
+    <Expansion 
+      data={pageData.expansion} 
+      features={pageData.expansionFeatures} 
+    />
+    <Benefits benefits={pageData.benefits} />
+    <Impact impacts={pageData.impacts} />
+    <Testimonials testimonials={pageData.testimonials} />
+  </main>
+  <Footer data={pageData.siteSettings} />
 </Layout>
