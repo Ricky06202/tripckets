@@ -58,7 +58,7 @@ const ctaSecondary = data?.ctaSecondary || { text: 'Más', url: '/mas' };
 
         <div class="flex flex-wrap gap-4">
           <a href={ctaPrimary.url} class="px-6 py-3 gradient-button rounded-full font-medium">{ctaPrimary.text}</a>
-          <a href={ctaSecondary.url} class="px-6 py-3 text-orange-500 font-medium flex items-center gap-1 hover:gap-2 transition-all">
+          <a href={ctaSecondary.url} class="px-6 py-3 gradient-text font-medium flex items-center gap-1 hover:gap-2 transition-all">
             {ctaSecondary.text}
             <Icon name="heroicons:arrow-right" class="w-4 h-4" />
           </a>

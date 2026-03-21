@@ -25,7 +25,7 @@ const ctaPrimary = data?.navbarCtaPrimary || { text: 'Ingresar', url: '/ingresar
 const ctaSecondary = data?.navbarCtaSecondary || { text: 'Crear', url: '/crear' };
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-orange-100">
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#92cdcf]/20">
   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
     <a href="/" class="text-2xl font-bold gradient-text">Tripcket</a>
     
@@ -42,7 +42,7 @@ const ctaSecondary = data?.navbarCtaSecondary || { text: 'Crear', url: '/crear' 
     </div>
 
     <div class="flex items-center gap-3">
-      <a href={ctaPrimary.url} class="px-4 py-2 text-sm gradient-border rounded-full text-orange-500 font-medium">{ctaPrimary.text}</a>
+      <a href={ctaPrimary.url} class="px-4 py-2 text-sm gradient-border rounded-full gradient-text font-medium">{ctaPrimary.text}</a>
       <a href={ctaSecondary.url} class="px-4 py-2 text-sm gradient-button rounded-full font-medium">{ctaSecondary.text}</a>
     </div>
   </div>
