@@ -9,9 +9,13 @@ const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
 
   async function fetchFromSanity(query) {
     const url = `https://${projectId}.api.sanity.io/v2024-01-01/data/query/${dataset}?query=${encodeURIComponent(query)}`;
+    console.log('Fetching:', url);
     try {
       const res = await fetch(url);
       const data = await res.json();
+      if (data.error) {
+        console.log('Sanity error:', data.error);
+      }
       return data.result;
     } catch (e) {
       console.log('Sanity fetch error:', e);
