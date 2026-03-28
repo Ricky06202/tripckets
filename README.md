@@ -1,46 +1,27 @@
-# Astro Starter Kit: Basics
+# Tripckets Monorepo 🎫
 
-```sh
-bun create astro@latest -- --template basics
+Bienvenido al monorepo de **Tripckets**. Este proyecto utiliza **Bun** para la gestión de dependencias y workspaces.
+
+## Estructura del Proyecto
+
+- **[frontend/](file:///home/ricky/Documentos/JS/Tripckets/frontend)**: Aplicación principal construida con **Astro** y **Tailwind CSS**.
+- **[backend/](file:///home/ricky/Documentos/JS/Tripckets/backend)**: Panel de administración y gestión de contenidos mediante **Sanity Studio**.
+
+## Comandos Rápidos
+
+Asegúrate de tener [Bun](https://bun.sh/) instalado.
+
+### Instalación
+```bash
+bun install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Desarrollo
+- Levantar frontend: `bun run dev:frontend`
+- Levantar Sanity Studio: `bun run dev:backend`
 
-## 🚀 Project Structure
+### Construcción
+- Build de todo: `bun run build:all`
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Notas de Despliegue
+Este proyecto está optimizado para su despliegue en entornos como **cPanel**, siguiendo las mejores prácticas de rendimiento y compatibilidad.
