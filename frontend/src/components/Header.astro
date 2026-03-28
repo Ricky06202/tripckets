@@ -28,12 +28,38 @@ interface FeaturedResource {
   url: string;
 }
 
+interface MegaMenuItem {
+  label: string;
+  description: string;
+  iconName: string;
+  url: string;
+}
+
+interface MegaMenuSection {
+  title: string;
+  items: MegaMenuItem[];
+}
+
+interface FeaturedResource {
+  title: string;
+  description: string;
+  linkText: string;
+  url: string;
+  image?: {
+    asset?: {
+      url?: string;
+    };
+  };
+}
+
 interface Props {
   data?: {
     logo?: any;
     navbarLinks?: Array<{ title: string; url: string }>;
     navbarCtaPrimary?: { text: string; url: string };
     navbarCtaSecondary?: { text: string; url: string };
+    megaMenuSections?: MegaMenuSection[];
+    megaMenuFeatured?: FeaturedResource[];
   };
 }
 
@@ -53,43 +79,46 @@ const links = data?.navbarLinks || [
 const ctaPrimary = data?.navbarCtaPrimary || { text: 'Ingresar', url: '/ingresar' };
 const ctaSecondary = data?.navbarCtaSecondary || { text: 'Crear', url: '/crear' };
 
-const megaMenuSections: MegaMenuSection[] = [
+const defaultMegaMenuSections: MegaMenuSection[] = [
   {
     title: 'Para viajeros',
     items: [
-      { label: 'Destinos', description: 'Explora los mejores lugares', icon_name: 'map', url: '/destinos' },
-      { label: 'Experiencias', description: 'Actividades únicas', icon_name: 'sparkles', url: '/experiencias' },
-      { label: 'Guías locales', description: 'Conoce a los habitantes', icon_name: 'user-group', url: '/guias' },
-      { label: 'Blog', description: 'Consejos y tips de viaje', icon_name: 'document-text', url: '/blog' },
+      { label: 'Destinos', description: 'Explora los mejores lugares', iconName: 'map', url: '/destinos' },
+      { label: 'Experiencias', description: 'Actividades únicas', iconName: 'sparkles', url: '/experiencias' },
+      { label: 'Guías locales', description: 'Conoce a los habitantes', iconName: 'user-group', url: '/guias' },
+      { label: 'Blog', description: 'Consejos y tips de viaje', iconName: 'document-text', url: '/blog' },
     ]
   },
   {
     title: 'Para negocios',
     items: [
-      { label: 'Sé un anfitrión', description: 'Comparte tu experiencia', icon_name: 'home', url: '/anfitrion' },
-      { label: 'Partners', description: 'Colabora con nosotros', icon_name: 'users', url: '/partners' },
-      { label: 'Empresas', description: 'Viajes corporativos', icon_name: 'briefcase', url: '/corporativo' },
-      { label: 'Contacto comercial', description: 'Hablemos de negocios', icon_name: 'at-symbol', url: '/contacto-empresarial' },
+      { label: 'Sé un anfitrión', description: 'Comparte tu experiencia', iconName: 'home', url: '/anfitrion' },
+      { label: 'Partners', description: 'Colabora con nosotros', iconName: 'users', url: '/partners' },
+      { label: 'Empresas', description: 'Viajes corporativos', iconName: 'briefcase', url: '/corporativo' },
+      { label: 'Contacto comercial', description: 'Hablemos de negocios', iconName: 'at-symbol', url: '/contacto-empresarial' },
     ]
   }
 ];
 
-const featuredResources: FeaturedResource[] = [
+const defaultFeaturedResources: FeaturedResource[] = [
   {
-    image_url: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&h=250&fit=crop',
     title: 'Top 10 destinos 2024',
     description: 'Los lugares que no puedes perderte',
-    link_text: 'Leer más',
-    url: '/top-destinos'
+    linkText: 'Leer más',
+    url: '/top-destinos',
+    image: { asset: { url: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&h=250&fit=crop' } }
   },
   {
-    image_url: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=400&h=250&fit=crop',
     title: 'Viaja como local',
     description: 'Experiencias auténticas garantizadas',
-    link_text: 'Descubrir',
-    url: '/como-local'
+    linkText: 'Descubrir',
+    url: '/como-local',
+    image: { asset: { url: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=400&h=250&fit=crop' } }
   }
 ];
+
+const megaMenuSections = data?.megaMenuSections?.length ? data.megaMenuSections : defaultMegaMenuSections;
+const featuredResources = data?.megaMenuFeatured?.length ? data.megaMenuFeatured : defaultFeaturedResources;
 ---
 
 <nav id="site-nav" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#92cdcf]/20">
@@ -127,7 +156,7 @@ const featuredResources: FeaturedResource[] = [
                     <li>
                       <a href={item.url} class="flex items-start gap-3 group/item">
                         <div class="w-8 h-8 rounded-full gradient-border flex items-center justify-center flex-shrink-0">
-                          <Icon name={`heroicons:${item.icon_name}`} class="w-4 h-4" />
+                          <Icon name={`heroicons:${item.iconName}`} class="w-4 h-4" />
                         </div>
                         <div>
                           <span class="text-sm font-medium text-gray-800 block group-hover/item:text-[#92cdcf] transition-colors">{item.label}</span>
@@ -146,11 +175,11 @@ const featuredResources: FeaturedResource[] = [
                 {featuredResources.map((resource) => (
                   <a href={resource.url} class="group/resource block">
                     <div class="aspect-video rounded-xl overflow-hidden mb-2 border border-[#92cdcf]/20">
-                      <img src={resource.image_url} alt={resource.title} class="w-full h-full object-cover group-hover/resource:scale-105 transition-transform duration-300" />
+                      <img src={resource.image?.asset?.url} alt={resource.title} class="w-full h-full object-cover group-hover/resource:scale-105 transition-transform duration-300" />
                     </div>
                     <h4 class="text-sm font-semibold text-gray-800 mb-1">{resource.title}</h4>
                     <p class="text-xs text-gray-500 mb-2">{resource.description}</p>
-                    <span class="text-xs text-[#92cdcf] font-medium">{resource.link_text} →</span>
+                    <span class="text-xs text-[#92cdcf] font-medium">{resource.linkText} →</span>
                   </a>
                 ))}
               </div>

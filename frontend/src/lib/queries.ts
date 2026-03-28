@@ -7,6 +7,27 @@ export async function getSiteSettings() {
       navbarLinks,
       navbarCtaPrimary,
       navbarCtaSecondary,
+      megaMenuSections[]{
+        title,
+        items[]{
+          label,
+          description,
+          iconName,
+          url
+        }
+      },
+      megaMenuFeatured[]{
+        title,
+        description,
+        linkText,
+        url,
+        image{
+          asset->{
+            _id,
+            url
+          }
+        }
+      },
       footerNewsletterText,
       footerColumns[]{
         title,
