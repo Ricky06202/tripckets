@@ -9,16 +9,11 @@ const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
 
   async function fetchFromSanity(query) {
     const url = `https://${projectId}.api.sanity.io/v2024-01-01/data/query/${dataset}?query=${encodeURIComponent(query)}`;
-    console.log('Fetching:', url);
     try {
       const res = await fetch(url);
       const data = await res.json();
-      if (data.error) {
-        console.log('Sanity error:', data.error);
-      }
       return data.result;
     } catch (e) {
-      console.log('Sanity fetch error:', e);
       return null;
     }
   }
@@ -69,7 +64,6 @@ const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
   }
 
   const hero = await fetchFromSanity('*[_type == "hero"][0]{title,subtitle,badgeText,ctaButtons,image}');
-  console.log('Hero data:', JSON.stringify(hero, null, 2));
   if (hero) {
     const heroSection = document.getElementById('inicio');
     if (heroSection) {
@@ -98,7 +92,6 @@ const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
         const ext = ref.match(/\-([a-z]+)$/)?.[1] || 'png';
         const baseId = ref.replace(`-${ext}`, '');
         const heroImageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${baseId}.${ext}`;
-        console.log('Hero image URL:', heroImageUrl);
         heroImageContainer.innerHTML = `<img src="${heroImageUrl}" alt="${hero.title || 'Hero'}" class="w-full h-full object-cover" />`;
       }
     }
