@@ -59,7 +59,7 @@ const copyright = data?.copyright || '© 2026 Tripcket. Todos los derechos reser
   <div class="max-w-7xl mx-auto px-6">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
       <div class="sm:col-span-2 lg:col-span-1" data-aos="fade-up" data-aos-delay="100">
-        <a href="/" class="text-2xl font-bold gradient-text block mb-6">Tripcket</a>
+        <a href="/" class="text-2xl font-bold gradient-text-solid block mb-6">Tripcket</a>
         
         <div class="mb-6">
           <p class="text-sm text-gray-600 mb-3">{newsletterText}</p>
@@ -85,7 +85,7 @@ const copyright = data?.copyright || '© 2026 Tripcket. Todos los derechos reser
               const linkUrl = typeof link === 'object' ? link?.url : '#';
               return (
                 <li>
-                  <a href={linkUrl} class="text-gray-600 hover:gradient-text transition-colors text-sm">{linkTitle}</a>
+                  <a href={linkUrl} class="text-gray-600 hover:gradient-text-solid transition-colors text-sm">{linkTitle}</a>
                 </li>
               );
             })}
@@ -99,7 +99,7 @@ const copyright = data?.copyright || '© 2026 Tripcket. Todos los derechos reser
           {socials.map(social => (
             <a 
               href={social.url} 
-              class="w-10 h-10 rounded-full gradient-bg flex items-center justify-center hover:opacity-80 transition-opacity"
+              class="w-10 h-10 rounded-full gradient-border flex items-center justify-center hover:opacity-80 transition-opacity"
               aria-label={social.name}
               target="_blank"
               rel="noopener noreferrer"

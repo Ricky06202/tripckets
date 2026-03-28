@@ -48,15 +48,13 @@
 	}
 
 	.gradient-bg {
-		background: linear-gradient(90deg, #fff7ad, #92cdcf);
+		border: 2px solid #92cdcf;
+		background: transparent;
 	}
 
 	.gradient-border {
-		border: 2px solid transparent;
-		background: linear-gradient(90deg, #fff7ad, #92cdcf) border-box;
-		-webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-		-webkit-mask-composite: xor;
-		mask-composite: exclude;
+		border: 2px solid #92cdcf;
+		background: transparent;
 		color: #333;
 		transition: all 0.3s ease;
 	}
@@ -67,11 +65,8 @@
 	}
 
 	.gradient-button {
-		border: 2px solid transparent;
-		background: linear-gradient(90deg, #fff7ad, #92cdcf) border-box;
-		-webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-		-webkit-mask-composite: xor;
-		mask-composite: exclude;
+		border: 2px solid #92cdcf;
+		background: transparent;
 		color: #333;
 		transition: all 0.3s ease;
 	}
@@ -85,8 +80,13 @@
 		transform: translateY(0);
 	}
 
+	.gradient-text-solid {
+		color: #92cdcf;
+	}
+
 	.placeholder-rect {
-		background: linear-gradient(90deg, #fff7ad20, #92cdcf20);
+		border: 2px solid #92cdcf;
+		background: transparent;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -101,6 +101,11 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+	}
+
+	.icon-circle {
+		border: 2px solid #92cdcf;
+		background: transparent;
 	}
 
 	.gold-star {
