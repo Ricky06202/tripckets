@@ -28,7 +28,7 @@ const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
       if (match) {
         const assetId = match[1];
         const ext = match[2];
-        const logoUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}.${ext}`;
+        const logoUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-${ext}.${ext}`;
         const logoLink = nav.querySelector('a[href="/"]');
         if (logoLink) {
           logoLink.innerHTML = `<img src="${logoUrl}" alt="Tripcket" class="h-10 w-auto object-contain" />`;
@@ -96,7 +96,7 @@ const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
         if (match) {
           const assetId = match[1];
           const ext = match[2];
-          const heroImageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}.${ext}`;
+          const heroImageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-${ext}.${ext}`;
           heroImageContainer.innerHTML = `<img src="${heroImageUrl}" alt="${hero.title || 'Hero'}" class="w-full h-full object-cover" />`;
         }
       }

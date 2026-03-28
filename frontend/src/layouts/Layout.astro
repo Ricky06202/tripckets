@@ -52,8 +52,11 @@
 	}
 
 	.gradient-border {
-		border: 2px solid #92cdcf;
-		background: transparent;
+		border: 2px solid transparent;
+		background: linear-gradient(90deg, #fff7ad, #92cdcf) border-box;
+		-webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
 		color: #333;
 		transition: all 0.3s ease;
 	}
@@ -64,7 +67,11 @@
 	}
 
 	.gradient-button {
-		background: #92cdcf;
+		border: 2px solid transparent;
+		background: linear-gradient(90deg, #fff7ad, #92cdcf) border-box;
+		-webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
 		color: #333;
 		transition: all 0.3s ease;
 	}
