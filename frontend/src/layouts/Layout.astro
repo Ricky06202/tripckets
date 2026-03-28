@@ -36,33 +36,49 @@
 	}
 
 	::selection {
-		background: #92cdcf;
+		background: linear-gradient(90deg, #fff7ad, #92cdcf);
 		color: #333;
 	}
 
 	.gradient-text {
-		color: #92cdcf;
+		background: linear-gradient(90deg, #fff7ad, #92cdcf);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
 	}
 
 	.gradient-bg {
-		background: #92cdcf;
+		background: linear-gradient(90deg, #fff7ad, #92cdcf);
 	}
 
 	.gradient-border {
-		border: 2px solid #92cdcf;
+		border: 2px solid transparent;
+		background: linear-gradient(90deg, #fff7ad, #92cdcf) border-box;
+		-webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
 		color: #333;
+		transition: all 0.3s ease;
+	}
+
+	.gradient-border:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 10px 30px rgba(146, 205, 207, 0.3);
 	}
 
 	.gradient-button {
-		background: #92cdcf;
+		border: 2px solid transparent;
+		background: linear-gradient(90deg, #fff7ad, #92cdcf) border-box;
+		-webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
 		color: #333;
 		transition: all 0.3s ease;
 	}
 
 	.gradient-button:hover {
-		background: #7dbebe;
-		transform: translateY(-2px);
-		box-shadow: 0 10px 30px rgba(146, 205, 207, 0.4);
+		transform: translateY(-3px);
+		box-shadow: 0 10px 30px rgba(146, 205, 207, 0.3);
 	}
 
 	.gradient-button:active {
@@ -70,8 +86,8 @@
 	}
 
 	.placeholder-rect {
-		background: #92cdcf1a;
-		border: 1px dashed #92cdcf4d;
+		background: linear-gradient(90deg, #fff7ad, #92cdcf);
+		opacity: 0.1;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -113,7 +129,7 @@
 		left: 0;
 		width: 0;
 		height: 2px;
-		background: #92cdcf;
+		background: linear-gradient(90deg, #fff7ad, #92cdcf);
 		transition: width 0.3s ease;
 	}
 
@@ -127,7 +143,7 @@
 
 	.card-hover:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 20px 40px rgba(146, 205, 207, 0.15);
+		box-shadow: 0 20px 40px rgba(146, 205, 207, 0.25);
 	}
 
 	/* Micro-interacciones para botones secundarios */
@@ -136,7 +152,8 @@
 	}
 
 	.gradient-border:hover {
-		background: #92cdcf;
+		transform: translateY(-3px);
+		box-shadow: 0 10px 30px rgba(146, 205, 207, 0.3);
 	}
 
 	/* Animación para links */

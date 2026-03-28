@@ -15,6 +15,9 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
+      backgroundImage: {
+        'gradient-tripcket': 'linear-gradient(90deg, #fff7ad, #92cdcf)',
+      }
     },
   },
   plugins: [],
