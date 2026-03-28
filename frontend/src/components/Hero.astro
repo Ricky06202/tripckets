@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { urlFor } from '../lib/sanity';
 
 interface CTAButton {
   text: string;
@@ -13,17 +14,13 @@ interface Props {
     subtitle?: string;
     badgeText?: string;
     ctaButtons?: CTAButton[];
-    image?: {
-      asset?: {
-        url?: string;
-      };
-    };
+    image?: any;
   };
 }
 
 const { data } = Astro.props;
 
-const imageUrl = data?.image?.asset?.url;
+const imageUrl = data?.image ? urlFor(data.image).url() : null;
 const title = data?.title || 'Tu boleto para descubrir experiencias auténticas';
 const subtitle = data?.subtitle || 'Tripcket te conecta con viajes únicos diseñados por locales, eliminando intermediarios y creando memorias genuinas.';
 const badgeText = data?.badgeText || 'Un boleto, infinitas posibilidades';

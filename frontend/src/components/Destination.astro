@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { urlFor } from '../lib/sanity';
 
 interface CTAButton {
   text: string;
@@ -14,17 +15,13 @@ interface Props {
     bullets?: string[];
     ctaPrimary?: CTAButton;
     ctaSecondary?: CTAButton;
-    image?: {
-      asset?: {
-        url?: string;
-      };
-    };
+    image?: any;
   };
 }
 
 const { data } = Astro.props;
 
-const imageUrl = data?.image?.asset?.url;
+const imageUrl = data?.image ? urlFor(data.image).url() : null;
 const title = data?.title || 'Boquete, Panamá te espera';
 const subtitle = data?.subtitle || 'Panamá';
 const description = data?.description || 'Descubre Boquete, un paraíso escondido en las tierras altas de Panamá. Con su clima perfecto, paisajes espectaculares y comunidad acogedora, es el destino ideal para tu próximo Tripcket.';

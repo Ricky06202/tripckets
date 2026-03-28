@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { urlFor } from '../lib/sanity';
 
 interface Props {
   data?: {
@@ -7,17 +8,13 @@ interface Props {
     description?: string;
     buttonText?: string;
     buttonUrl?: string;
-    image?: {
-      asset?: {
-        url?: string;
-      };
-    };
+    image?: any;
   };
 }
 
 const { data } = Astro.props;
 
-const imageUrl = data?.image?.asset?.url;
+const imageUrl = data?.image ? urlFor(data.image).url() : null;
 const title = data?.title || 'Construye el viaje que siempre quisiste';
 const description = data?.description || 'Olvídate de las búsquedas interminables. Con Tripcket, diseñas exactamente el viaje que deseas, desde actividades hasta alojamiento, todo en un solo lugar.';
 const buttonText = data?.buttonText || 'Personalizar';

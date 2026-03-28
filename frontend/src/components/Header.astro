@@ -5,12 +5,7 @@ import { urlFor } from '../lib/sanity';
 
 interface Props {
   data?: {
-    logo?: {
-      asset?: {
-        _id?: string;
-        url?: string;
-      };
-    };
+    logo?: any;
     navbarLinks?: Array<{ title: string; url: string }>;
     navbarCtaPrimary?: { text: string; url: string };
     navbarCtaSecondary?: { text: string; url: string };
@@ -19,7 +14,7 @@ interface Props {
 
 const { data } = Astro.props;
 
-const logoUrl = data?.logo?.asset?.url;
+const logoUrl = data?.logo ? urlFor(data.logo).width(200).url() : null;
 const links = data?.navbarLinks || [
   { title: 'Inicio', url: '/' },
   { title: 'Ejemplo de Tripcket', url: '/ejemplo' },
