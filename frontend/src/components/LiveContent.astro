@@ -1,11 +1,10 @@
 ---
+const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || 'TU_PROJECT_ID';
+const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
 ---
 
-<script is:inline>
+<script define:vars={{ projectId, dataset }}>
 (async function() {
-  const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
-  const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
-  
   if (!projectId || projectId === 'TU_PROJECT_ID') return;
 
   async function fetchFromSanity(query) {
@@ -95,6 +94,7 @@
         const ext = ref.match(/\-([a-z]+)$/)?.[1] || 'png';
         const baseId = ref.replace(`-${ext}`, '');
         const heroImageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${baseId}.${ext}`;
+        console.log('Hero image URL:', heroImageUrl);
         heroImageContainer.innerHTML = `<img src="${heroImageUrl}" alt="${hero.title || 'Hero'}" class="w-full h-full object-cover" />`;
       }
     }
