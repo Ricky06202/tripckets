@@ -18,28 +18,34 @@ const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
     }
   }
 
+  function getImageUrl(ref) {
+    if (!ref) return null;
+    const match = ref.match(/^image-([a-f0-9]+)-(\d+)x(\d+)-([a-z]+)$/);
+    if (match) {
+      const assetId = match[1];
+      const width = match[2];
+      const height = match[3];
+      const ext = match[4];
+      return `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-${width}x${height}.${ext}`;
+    }
+    return null;
+  }
+
+  // ==================== SITE SETTINGS ====================
   const siteSettings = await fetchFromSanity('*[_type == "siteSettings"][0]');
 
   if (siteSettings) {
     const nav = document.getElementById('site-nav');
     if (nav && siteSettings.logo?.asset?._ref) {
-      const ref = siteSettings.logo.asset._ref;
-      const match = ref.match(/^image-([a-f0-9]+)-(\d+)x(\d+)-([a-z]+)$/);
-      if (match) {
-        const assetId = match[1];
-        const width = match[2];
-        const height = match[3];
-        const ext = match[4];
-        const logoUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-${width}x${height}.${ext}`;
-        const logoLink = nav.querySelector('a[href="/"]');
-        if (logoLink) {
-          logoLink.innerHTML = `<img src="${logoUrl}" alt="Tripcket" class="h-10 w-auto object-contain" />`;
-        }
+      const logoUrl = getImageUrl(siteSettings.logo.asset._ref);
+      const logoLink = nav.querySelector('a[href="/"]');
+      if (logoLink && logoUrl) {
+        logoLink.innerHTML = `<img src="${logoUrl}" alt="Tripcket" class="h-10 w-auto object-contain" />`;
       }
     }
 
     if (siteSettings.navbarLinks && siteSettings.navbarLinks.length > 0) {
-      const linksContainer = nav.querySelector('[class*="hidden md:flex"]');
+      const linksContainer = nav?.querySelector('[class*="hidden md:flex"]');
       if (linksContainer) {
         const links = linksContainer.querySelectorAll('[data-nav-link]');
         siteSettings.navbarLinks.forEach((link, i) => {
@@ -66,8 +72,19 @@ const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
         if (siteSettings.navbarCtaSecondary.url) ctaSecondary.href = siteSettings.navbarCtaSecondary.url;
       }
     }
+
+    if (siteSettings.footerNewsletterText) {
+      const newsletterText = document.querySelector('[data-newsletter-text]');
+      if (newsletterText) newsletterText.textContent = siteSettings.footerNewsletterText;
+    }
+
+    if (siteSettings.copyright) {
+      const copyright = document.querySelector('[data-copyright]');
+      if (copyright) copyright.textContent = siteSettings.copyright;
+    }
   }
 
+  // ==================== HERO ====================
   const hero = await fetchFromSanity('*[_type == "hero"][0]{title,subtitle,badgeText,ctaButtons,image}');
   if (hero) {
     const heroSection = document.getElementById('inicio');
@@ -93,18 +110,251 @@ const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
 
       const heroImageContainer = heroSection.querySelector('.placeholder-rect');
       if (heroImageContainer && hero.image?.asset?._ref) {
-        const ref = hero.image.asset._ref;
-        const match = ref.match(/^image-([a-f0-9]+)-(\d+)x(\d+)-([a-z]+)$/);
-        if (match) {
-          const assetId = match[1];
-          const width = match[2];
-          const height = match[3];
-          const ext = match[4];
-          const heroImageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}-${width}x${height}.${ext}`;
-          heroImageContainer.innerHTML = `<img src="${heroImageUrl}" alt="${hero.title || 'Hero'}" class="w-full h-full object-cover" />`;
+        const imgUrl = getImageUrl(hero.image.asset._ref);
+        if (imgUrl) {
+          heroImageContainer.innerHTML = `<img src="${imgUrl}" alt="${hero.title || 'Hero'}" class="w-full h-full object-cover" />`;
         }
       }
     }
+  }
+
+  // ==================== CORE VALUE / FEATURES ====================
+  const features = await fetchFromSanity('*[_type == "feature"] | order(order asc) {icon,title,description}');
+  if (features && features.length > 0) {
+    const featureCards = document.querySelectorAll('#core-value .card-hover');
+    features.forEach((feature, i) => {
+      if (featureCards[i]) {
+        const title = featureCards[i].querySelector('h3');
+        const desc = featureCards[i].querySelector('p');
+        if (title && feature.title) title.textContent = feature.title;
+        if (desc && feature.description) desc.textContent = feature.description;
+      }
+    });
+  }
+
+  // ==================== PROBLEMS ====================
+  const problems = await fetchFromSanity('*[_type == "problem"] | order(order asc) {icon,text}');
+  if (problems && problems.length > 0) {
+    const problemItems = document.querySelectorAll('#problems .flex.items-start');
+    problems.forEach((problem, i) => {
+      if (problemItems[i]) {
+        const text = problemItems[i].querySelector('p');
+        if (text && problem.text) text.textContent = problem.text;
+      }
+    });
+  }
+
+  // ==================== SOLUTION ====================
+  const solution = await fetchFromSanity('*[_type == "solution"][0]{title,description,bullets,ctaPrimary,ctaSecondary,image}');
+  if (solution) {
+    const solutionSection = document.getElementById('solution');
+    if (solutionSection) {
+      const title = solutionSection.querySelector('h2');
+      const desc = solutionSection.querySelector('p.text-lg');
+      if (title && solution.title) title.textContent = solution.title;
+      if (desc && solution.description) desc.textContent = solution.description;
+
+      const bullets = solutionSection.querySelectorAll('ul li span');
+      if (solution.bullets && bullets.length > 0) {
+        solution.bullets.forEach((bullet, i) => {
+          if (bullets[i]) bullets[i].textContent = bullet;
+        });
+      }
+
+      const ctaPrimary = solutionSection.querySelector('.gradient-button');
+      if (ctaPrimary && solution.ctaPrimary) {
+        ctaPrimary.textContent = solution.ctaPrimary.text;
+        if (solution.ctaPrimary.url) ctaPrimary.href = solution.ctaPrimary.url;
+      }
+
+      const solutionImage = solutionSection.querySelector('.placeholder-rect');
+      if (solutionImage && solution.image?.asset?._ref) {
+        const imgUrl = getImageUrl(solution.image.asset._ref);
+        if (imgUrl) {
+          solutionImage.innerHTML = `<img src="${imgUrl}" alt="${solution.title || 'Solution'}" class="w-full h-full object-cover" />`;
+        }
+      }
+    }
+  }
+
+  // ==================== PROCESS / STEPS ====================
+  const processSteps = await fetchFromSanity('*[_type == "processStep"] | order(order asc) {number,title,description}');
+  if (processSteps && processSteps.length > 0) {
+    const processCards = document.querySelectorAll('#process .bg-white.rounded-2xl');
+    processSteps.forEach((step, i) => {
+      if (processCards[i]) {
+        const number = processCards[i].querySelector('span.rounded-full');
+        const title = processCards[i].querySelector('h3');
+        const desc = processCards[i].querySelector('p.text-sm');
+        if (number && step.number) number.textContent = step.number;
+        if (title && step.title) title.textContent = step.title;
+        if (desc && step.description) desc.textContent = step.description;
+      }
+    });
+  }
+
+  // ==================== PERSONALIZATION ====================
+  const personalization = await fetchFromSanity('*[_type == "personalization"][0]{title,description,buttonText,buttonUrl,image}');
+  if (personalization) {
+    const personalizationSection = document.getElementById('personalization');
+    if (personalizationSection) {
+      const title = personalizationSection.querySelector('h2');
+      const desc = personalizationSection.querySelector('p.text-lg');
+      const button = personalizationSection.querySelector('.gradient-button');
+      if (title && personalization.title) title.textContent = personalization.title;
+      if (desc && personalization.description) desc.textContent = personalization.description;
+      if (button && personalization.buttonText) {
+        button.textContent = personalization.buttonText;
+        if (personalization.buttonUrl) button.href = personalization.buttonUrl;
+      }
+
+      const personalizationImage = personalizationSection.querySelector('.placeholder-rect');
+      if (personalizationImage && personalization.image?.asset?._ref) {
+        const imgUrl = getImageUrl(personalization.image.asset._ref);
+        if (imgUrl) {
+          personalizationImage.innerHTML = `<img src="${imgUrl}" alt="${personalization.title || 'Personalization'}" class="w-full h-full object-cover" />`;
+        }
+      }
+    }
+  }
+
+  // ==================== EXAMPLES / TRAVELER TYPES ====================
+  const travelerTypes = await fetchFromSanity('*[_type == "travelerType"] | order(order asc) {title,description}');
+  if (travelerTypes && travelerTypes.length > 0) {
+    const travelerCards = document.querySelectorAll('#examples .bg-white.rounded-2xl');
+    travelerTypes.forEach((traveler, i) => {
+      if (travelerCards[i]) {
+        const title = travelerCards[i].querySelector('h3');
+        const desc = travelerCards[i].querySelector('p');
+        if (title && traveler.title) title.textContent = traveler.title;
+        if (desc && traveler.description) desc.textContent = traveler.description;
+      }
+    });
+  }
+
+  // ==================== DESTINATION ====================
+  const destination = await fetchFromSanity('*[_type == "destination"][0]{title,subtitle,description,bullets,ctaPrimary,ctaSecondary,image}');
+  if (destination) {
+    const destinationSection = document.getElementById('destination');
+    if (destinationSection) {
+      const title = destinationSection.querySelector('h2');
+      const desc = destinationSection.querySelector('p.text-lg');
+      if (title && destination.title) title.textContent = destination.title;
+      if (desc && destination.description) desc.textContent = destination.description;
+
+      const bullets = destinationSection.querySelectorAll('ul li span');
+      if (destination.bullets && bullets.length > 0) {
+        destination.bullets.forEach((bullet, i) => {
+          if (bullets[i]) bullets[i].textContent = bullet;
+        });
+      }
+
+      const ctaPrimary = destinationSection.querySelector('.gradient-button');
+      if (ctaPrimary && destination.ctaPrimary) {
+        ctaPrimary.textContent = destination.ctaPrimary.text;
+        if (destination.ctaPrimary.url) ctaPrimary.href = destination.ctaPrimary.url;
+      }
+
+      const destinationImage = destinationSection.querySelector('.placeholder-rect');
+      if (destinationImage && destination.image?.asset?._ref) {
+        const imgUrl = getImageUrl(destination.image.asset._ref);
+        if (imgUrl) {
+          destinationImage.innerHTML = `<img src="${imgUrl}" alt="${destination.title || 'Destination'}" class="w-full h-full object-cover" />`;
+        }
+      }
+    }
+  }
+
+  // ==================== EARLY ACCESS ====================
+  const earlyAccess = await fetchFromSanity('*[_type == "earlyAccess"][0]{title,subtitle,placeholder,buttonText}');
+  if (earlyAccess) {
+    const earlyAccessSection = document.getElementById('early-access');
+    if (earlyAccessSection) {
+      const title = earlyAccessSection.querySelector('h2');
+      const subtitle = earlyAccessSection.querySelector('p.text-gray-700');
+      const input = earlyAccessSection.querySelector('input');
+      const button = earlyAccessSection.querySelector('button');
+      if (title && earlyAccess.title) title.textContent = earlyAccess.title;
+      if (subtitle && earlyAccess.subtitle) subtitle.textContent = earlyAccess.subtitle;
+      if (input && earlyAccess.placeholder) input.placeholder = earlyAccess.placeholder;
+      if (button && earlyAccess.buttonText) button.textContent = earlyAccess.buttonText;
+    }
+  }
+
+  // ==================== EXPANSION ====================
+  const expansion = await fetchFromSanity('*[_type == "expansion"][0]{preTitle,title,description,ctaPrimary,ctaSecondary}');
+  const expansionFeatures = await fetchFromSanity('*[_type == "expansionFeature"] | order(order asc) {icon,title,text}');
+  
+  if (expansion || (expansionFeatures && expansionFeatures.length > 0)) {
+    const expansionSection = document.getElementById('expansion');
+    if (expansionSection) {
+      if (expansion) {
+        const preTitle = expansionSection.querySelector('p.text-gray-400');
+        const title = expansionSection.querySelector('h2');
+        const desc = expansionSection.querySelector('p.text-gray-500');
+        if (preTitle && expansion.preTitle) preTitle.textContent = expansion.preTitle;
+        if (title && expansion.title) title.textContent = expansion.title;
+        if (desc && expansion.description) desc.textContent = expansion.description;
+      }
+
+      if (expansionFeatures && expansionFeatures.length > 0) {
+        const featureCards = expansionSection.querySelectorAll('.bg-white.p-6.rounded-2xl');
+        expansionFeatures.forEach((feature, i) => {
+          if (featureCards[i]) {
+            const title = featureCards[i].querySelector('h3');
+            const text = featureCards[i].querySelector('p');
+            if (title && feature.title) title.textContent = feature.title;
+            if (text && feature.text) text.textContent = feature.text;
+          }
+        });
+      }
+    }
+  }
+
+  // ==================== BENEFITS ====================
+  const benefits = await fetchFromSanity('*[_type == "benefit"] | order(order asc) {title,description,buttonText}');
+  if (benefits && benefits.length > 0) {
+    const benefitCards = document.querySelectorAll('#benefits .bg-white.rounded-2xl');
+    benefits.forEach((benefit, i) => {
+      if (benefitCards[i]) {
+        const title = benefitCards[i].querySelector('h3');
+        const desc = benefitCards[i].querySelector('p');
+        const button = benefitCards[i].querySelector('.gradient-button');
+        if (title && benefit.title) title.textContent = benefit.title;
+        if (desc && benefit.description) desc.textContent = benefit.description;
+        if (button && benefit.buttonText) button.textContent = benefit.buttonText;
+      }
+    });
+  }
+
+  // ==================== IMPACTS ====================
+  const impacts = await fetchFromSanity('*[_type == "impact"] | order(order asc) {icon,title,description}');
+  if (impacts && impacts.length > 0) {
+    const impactItems = document.querySelectorAll('#impacts .flex.items-start');
+    impacts.forEach((impact, i) => {
+      if (impactItems[i]) {
+        const title = impactItems[i].querySelector('h3');
+        const desc = impactItems[i].querySelector('p');
+        if (title && impact.title) title.textContent = impact.title;
+        if (desc && impact.description) desc.textContent = impact.description;
+      }
+    });
+  }
+
+  // ==================== TESTIMONIALS ====================
+  const testimonials = await fetchFromSanity('*[_type == "testimonial"] | order(order asc) {quote,author,location}');
+  if (testimonials && testimonials.length > 0) {
+    const testimonialCards = document.querySelectorAll('#testimonials .bg-white.rounded-2xl');
+    testimonials.forEach((testimonial, i) => {
+      if (testimonialCards[i]) {
+        const quote = testimonialCards[i].querySelector('blockquote');
+        const author = testimonialCards[i].querySelector('.font-semibold');
+        const location = testimonialCards[i].querySelector('.text-sm.text-gray-500');
+        if (quote && testimonial.quote) quote.textContent = `"${testimonial.quote}"`;
+        if (author && testimonial.author) author.textContent = testimonial.author;
+        if (location && testimonial.location) location.textContent = testimonial.location;
+      }
+    });
   }
 })();
 </script>
