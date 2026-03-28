@@ -24,8 +24,11 @@
 
   if (siteSettings) {
     const nav = document.getElementById('site-nav');
-    if (nav && siteSettings.logo) {
-      const logoUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${siteSettings.logo.asset._ref.replace('-jpg', '.jpg').replace('-png', '.png').replace('-webp', '.webp')}`;
+    if (nav && siteSettings.logo?.asset?._ref) {
+      const ref = siteSettings.logo.asset._ref;
+      const ext = ref.match(/\-([a-z]+)$/)?.[1] || 'png';
+      const baseId = ref.replace(`-${ext}`, '');
+      const logoUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${baseId}.${ext}`;
       const logoLink = nav.querySelector('a[href="/"]');
       if (logoLink) {
         logoLink.innerHTML = `<img src="${logoUrl}" alt="Tripcket" class="h-10 w-auto object-contain" />`;
@@ -88,11 +91,9 @@
       const heroImageContainer = heroSection.querySelector('.placeholder-rect');
       if (heroImageContainer && hero.image?.asset?._ref) {
         const ref = hero.image.asset._ref;
-        const ext = ref.includes('png') ? 'png' : ref.includes('webp') ? 'webp' : 'jpg';
-        const parts = ref.split('-');
-        const assetId = parts.slice(1, -2).join('-');
-        const heroImageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}.${ext}`;
-        console.log('Hero image URL:', heroImageUrl);
+        const ext = ref.match(/\-([a-z]+)$/)?.[1] || 'png';
+        const baseId = ref.replace(`-${ext}`, '');
+        const heroImageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${baseId}.${ext}`;
         heroImageContainer.innerHTML = `<img src="${heroImageUrl}" alt="${hero.title || 'Hero'}" class="w-full h-full object-cover" />`;
       }
     }
