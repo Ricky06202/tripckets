@@ -52,11 +52,9 @@
 	}
 
 	.gradient-border {
-		border: 2px solid transparent;
-		background: linear-gradient(90deg, #fff7ad, #92cdcf) border-box;
-		-webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-		-webkit-mask-composite: xor;
-		mask-composite: exclude;
+		border: 2px solid;
+		border-image: linear-gradient(90deg, #fff7ad, #92cdcf) 1;
+		background: transparent;
 		color: #333;
 		transition: all 0.3s ease;
 	}
@@ -64,14 +62,13 @@
 	.gradient-border:hover {
 		transform: translateY(-3px);
 		box-shadow: 0 10px 30px rgba(146, 205, 207, 0.3);
+		background: linear-gradient(90deg, #fff7ad, #92cdcf);
 	}
 
 	.gradient-button {
-		border: 2px solid transparent;
-		background: linear-gradient(90deg, #fff7ad, #92cdcf) border-box;
-		-webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-		-webkit-mask-composite: xor;
-		mask-composite: exclude;
+		border: 2px solid;
+		border-image: linear-gradient(90deg, #fff7ad, #92cdcf) 1;
+		background: transparent;
 		color: #333;
 		transition: all 0.3s ease;
 	}
@@ -79,6 +76,7 @@
 	.gradient-button:hover {
 		transform: translateY(-3px);
 		box-shadow: 0 10px 30px rgba(146, 205, 207, 0.3);
+		background: linear-gradient(90deg, #fff7ad, #92cdcf);
 	}
 
 	.gradient-button:active {
