@@ -8,7 +8,13 @@ export async function getSiteSettings() {
       navbarCtaPrimary,
       navbarCtaSecondary,
       footerNewsletterText,
-      footerColumns,
+      footerColumns[]{
+        title,
+        links[]{
+          title,
+          url
+        }
+      },
       socials,
       copyright
     }
@@ -21,7 +27,11 @@ export async function getHero() {
       title,
       subtitle,
       badgeText,
-      ctaButtons,
+      ctaButtons[]{
+        text,
+        url,
+        style
+      },
       image
     }
   `)
@@ -61,9 +71,20 @@ export async function getSolution() {
       title,
       description,
       bullets,
-      image,
-      ctaPrimary,
-      ctaSecondary
+      image{
+        asset->{
+          _id,
+          url
+        }
+      },
+      ctaPrimary{
+        text,
+        url
+      },
+      ctaSecondary{
+        text,
+        url
+      }
     }
   `)
 }
@@ -85,7 +106,12 @@ export async function getPersonalization() {
       description,
       buttonText,
       buttonUrl,
-      image
+      image{
+        asset->{
+          _id,
+          url
+        }
+      }
     }
   `)
 }
@@ -107,9 +133,20 @@ export async function getDestination() {
       subtitle,
       description,
       bullets,
-      image,
-      ctaPrimary,
-      ctaSecondary
+      image{
+        asset->{
+          _id,
+          url
+        }
+      },
+      ctaPrimary{
+        text,
+        url
+      },
+      ctaSecondary{
+        text,
+        url
+      }
     }
   `)
 }

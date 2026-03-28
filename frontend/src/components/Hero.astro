@@ -13,11 +13,17 @@ interface Props {
     subtitle?: string;
     badgeText?: string;
     ctaButtons?: CTAButton[];
+    image?: {
+      asset?: {
+        url?: string;
+      };
+    };
   };
 }
 
 const { data } = Astro.props;
 
+const imageUrl = data?.image?.asset?.url;
 const title = data?.title || 'Tu boleto para descubrir experiencias auténticas';
 const subtitle = data?.subtitle || 'Tripcket te conecta con viajes únicos diseñados por locales, eliminando intermediarios y creando memorias genuinas.';
 const badgeText = data?.badgeText || 'Un boleto, infinitas posibilidades';
@@ -48,9 +54,13 @@ const ctaButtons = data?.ctaButtons || [
       </div>
     </div>
 
-    <div class="placeholder-rect aspect-square rounded-2xl md:rounded-3xl" data-aos="fade-left" data-aos-delay="200">
-      <Icon name="heroicons:photo" class="w-12 md:w-16 h-12 md:h-16 opacity-50" />
-    </div>
+<div class="placeholder-rect aspect-square rounded-2xl md:rounded-3xl overflow-hidden" data-aos="fade-left" data-aos-delay="200">
+        {imageUrl ? (
+          <img src={imageUrl} alt={title} class="w-full h-full object-cover" />
+        ) : (
+          <Icon name="heroicons:photo" class="w-12 md:w-16 h-12 md:h-16 opacity-50" />
+        )}
+      </div>
   </div>
 
   <div class="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 mx-4 gradient-bg px-6 md:px-8 py-3 md:py-4 rounded-xl" data-aos="fade-up" data-aos-delay="400">

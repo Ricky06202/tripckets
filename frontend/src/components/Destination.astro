@@ -14,11 +14,17 @@ interface Props {
     bullets?: string[];
     ctaPrimary?: CTAButton;
     ctaSecondary?: CTAButton;
+    image?: {
+      asset?: {
+        url?: string;
+      };
+    };
   };
 }
 
 const { data } = Astro.props;
 
+const imageUrl = data?.image?.asset?.url;
 const title = data?.title || 'Boquete, Panamá te espera';
 const subtitle = data?.subtitle || 'Panamá';
 const description = data?.description || 'Descubre Boquete, un paraíso escondido en las tierras altas de Panamá. Con su clima perfecto, paisajes espectaculares y comunidad acogedora, es el destino ideal para tu próximo Tripcket.';
@@ -38,8 +44,12 @@ const ctaSecondary = data?.ctaSecondary || { text: 'Más', url: '/mas' };
     </h2>
 
     <div class="grid lg:grid-cols-2 gap-12 items-center">
-      <div class="placeholder-rect aspect-[4/3] rounded-3xl order-2 lg:order-1" data-aos="fade-right" data-aos-delay="200">
-        <Icon name="heroicons:photo" class="w-16 h-16 opacity-50" />
+      <div class="placeholder-rect aspect-[4/3] rounded-3xl overflow-hidden order-2 lg:order-1" data-aos="fade-right" data-aos-delay="200">
+        {imageUrl ? (
+          <img src={imageUrl} alt={title} class="w-full h-full object-cover" />
+        ) : (
+          <Icon name="heroicons:photo" class="w-16 h-16 opacity-50" />
+        )}
       </div>
 
       <div class="order-1 lg:order-2" data-aos="fade-left" data-aos-delay="300">

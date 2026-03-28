@@ -1,8 +1,16 @@
 ---
 import { Icon } from 'astro-icon/components';
 
+import { urlFor } from '../lib/sanity';
+
 interface Props {
   data?: {
+    logo?: {
+      asset?: {
+        _id?: string;
+        url?: string;
+      };
+    };
     navbarLinks?: Array<{ title: string; url: string }>;
     navbarCtaPrimary?: { text: string; url: string };
     navbarCtaSecondary?: { text: string; url: string };
@@ -11,6 +19,7 @@ interface Props {
 
 const { data } = Astro.props;
 
+const logoUrl = data?.logo?.asset?.url;
 const links = data?.navbarLinks || [
   { title: 'Inicio', url: '/' },
   { title: 'Ejemplo de Tripcket', url: '/ejemplo' },
@@ -27,7 +36,13 @@ const ctaSecondary = data?.navbarCtaSecondary || { text: 'Crear', url: '/crear' 
 
 <nav id="site-nav" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#92cdcf]/20">
   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="/" class="text-2xl font-bold gradient-text">Tripcket</a>
+    <a href="/" class="flex items-center gap-2">
+      {logoUrl ? (
+        <img src={logoUrl} alt="Tripcket" class="h-10 w-auto object-contain" />
+      ) : (
+        <span class="text-2xl font-bold gradient-text">Tripcket</span>
+      )}
+    </a>
     
     <div class="hidden md:flex items-center gap-8">
       {links.map((link, i) => (

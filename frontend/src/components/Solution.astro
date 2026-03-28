@@ -13,11 +13,17 @@ interface Props {
     bullets?: string[];
     ctaPrimary?: CTAButton;
     ctaSecondary?: CTAButton;
+    image?: {
+      asset?: {
+        url?: string;
+      };
+    };
   };
 }
 
 const { data } = Astro.props;
 
+const imageUrl = data?.image?.asset?.url;
 const title = data?.title || 'Todo en un solo boleto personalizado';
 const description = data?.description || 'Con Tripcket, cada detalle de tu viaje está cuidado. Desde la llegada hasta la partida, tienes todo programado y reservado en un solo lugar.';
 const bullets = data?.bullets || [
@@ -36,8 +42,12 @@ const ctaSecondary = data?.ctaSecondary || { text: 'Más', url: '/mas' };
     </h2>
 
     <div class="grid lg:grid-cols-2 gap-12 items-center">
-      <div class="placeholder-rect aspect-[4/3] rounded-3xl order-2 lg:order-1" data-aos="fade-right" data-aos-delay="200">
-        <Icon name="heroicons:photo" class="w-16 h-16 opacity-50" />
+      <div class="placeholder-rect aspect-[4/3] rounded-3xl overflow-hidden order-2 lg:order-1" data-aos="fade-right" data-aos-delay="200">
+        {imageUrl ? (
+          <img src={imageUrl} alt={title} class="w-full h-full object-cover" />
+        ) : (
+          <Icon name="heroicons:photo" class="w-16 h-16 opacity-50" />
+        )}
       </div>
 
       <div class="order-1 lg:order-2" data-aos="fade-left" data-aos-delay="300">

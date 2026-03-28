@@ -7,11 +7,17 @@ interface Props {
     description?: string;
     buttonText?: string;
     buttonUrl?: string;
+    image?: {
+      asset?: {
+        url?: string;
+      };
+    };
   };
 }
 
 const { data } = Astro.props;
 
+const imageUrl = data?.image?.asset?.url;
 const title = data?.title || 'Construye el viaje que siempre quisiste';
 const description = data?.description || 'Olvídate de las búsquedas interminables. Con Tripcket, diseñas exactamente el viaje que deseas, desde actividades hasta alojamiento, todo en un solo lugar.';
 const buttonText = data?.buttonText || 'Personalizar';
@@ -33,8 +39,12 @@ const buttonUrl = data?.buttonUrl || '/personalizar';
         </a>
       </div>
 
-      <div class="placeholder-rect aspect-square rounded-3xl" data-aos="fade-left" data-aos-delay="200">
-        <Icon name="heroicons:photo" class="w-16 h-16 opacity-50" />
+      <div class="placeholder-rect aspect-square rounded-3xl overflow-hidden" data-aos="fade-left" data-aos-delay="200">
+        {imageUrl ? (
+          <img src={imageUrl} alt={title} class="w-full h-full object-cover" />
+        ) : (
+          <Icon name="heroicons:photo" class="w-16 h-16 opacity-50" />
+        )}
       </div>
     </div>
   </div>

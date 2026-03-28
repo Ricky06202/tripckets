@@ -12,14 +12,19 @@ interface SocialLink {
   url: string;
 }
 
+interface FooterLinkItem {
+  title: string;
+  url?: string;
+}
+
 interface FooterLink {
   title: string;
-  links: string[];
+  links: string[] | FooterLinkItem[];
 }
 
 interface FooterColumn {
   title: string;
-  links: string[];
+  links: string[] | FooterLinkItem[];
 }
 
 interface Props {
@@ -35,7 +40,7 @@ interface Props {
 const { data } = Astro.props;
 
 const newsletterText = data?.footerNewsletterText || 'Suscríbete a nuestro boletín';
-const footerColumns = data?.footerColumns || [
+const footerColumns = data?.footerColumns?.length ? data.footerColumns : [
   { title: 'Explorar', links: ['Destinos', 'Experiencias', 'Guías locales', 'Blog'] },
   { title: 'Empresa', links: ['Nosotros', 'Carreras', 'Prensa', 'Contacto'] },
   { title: 'Síguenos', links: [] },
@@ -75,11 +80,15 @@ const copyright = data?.copyright || '© 2026 Tripcket. Todos los derechos reser
         <div data-aos="fade-up" data-aos-delay={200 + (index * 100)}>
           <h4 class="font-semibold mb-4">{column.title}</h4>
           <ul class="space-y-2">
-            {column.links.map(link => (
-              <li>
-                <a href="#" class="text-gray-600 hover:gradient-text transition-colors text-sm">{link}</a>
-              </li>
-            ))}
+            {column.links.map((link: any) => {
+              const linkTitle = typeof link === 'string' ? link : link?.title;
+              const linkUrl = typeof link === 'object' ? link?.url : '#';
+              return (
+                <li>
+                  <a href={linkUrl} class="text-gray-600 hover:gradient-text transition-colors text-sm">{linkTitle}</a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       ))}

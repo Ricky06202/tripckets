@@ -15,11 +15,21 @@ export const defaultData = {
     footerColumns: [
       {
         title: 'Explorar',
-        links: ['Destinos', 'Experiencias', 'Guías locales', 'Blog']
+        links: [
+          { title: 'Destinos', url: '/destinos' },
+          { title: 'Experiencias', url: '/experiencias' },
+          { title: 'Guías locales', url: '/guias' },
+          { title: 'Blog', url: '/blog' }
+        ]
       },
       {
         title: 'Empresa',
-        links: ['Nosotros', 'Carreras', 'Prensa', 'Contacto']
+        links: [
+          { title: 'Nosotros', url: '/empresa' },
+          { title: 'Carreras', url: '/carreras' },
+          { title: 'Prensa', url: '/prensa' },
+          { title: 'Contacto', url: '/contacto' }
+        ]
       },
       {
         title: 'Síguenos',
