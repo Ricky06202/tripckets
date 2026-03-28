@@ -87,9 +87,12 @@
 
       const heroImageContainer = heroSection.querySelector('.placeholder-rect');
       if (heroImageContainer && hero.image?.asset?._ref) {
-        const ext = hero.image.asset._ref.includes('png') ? 'png' : hero.image.asset._ref.includes('webp') ? 'webp' : 'jpg';
-        const assetId = hero.image.asset._ref.split('-')[1];
+        const ref = hero.image.asset._ref;
+        const ext = ref.includes('png') ? 'png' : ref.includes('webp') ? 'webp' : 'jpg';
+        const parts = ref.split('-');
+        const assetId = parts.slice(1, -2).join('-');
         const heroImageUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}.${ext}`;
+        console.log('Hero image URL:', heroImageUrl);
         heroImageContainer.innerHTML = `<img src="${heroImageUrl}" alt="${hero.title || 'Hero'}" class="w-full h-full object-cover" />`;
       }
     }
