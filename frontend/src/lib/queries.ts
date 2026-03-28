@@ -32,7 +32,12 @@ export async function getHero() {
         url,
         style
       },
-      image
+      image{
+        asset->{
+          _id,
+          url
+        }
+      }
     }
   `)
 }

@@ -20,22 +20,27 @@
     }
   }
 
-  const siteSettings = await fetchFromSanity('*[_type == "siteSettings"][0]');
+  const siteSettings = await fetchFromSanity('*[_type == "siteSettings"][0]{logo{asset->{url}},navbarLinks,navbarCtaPrimary,navbarCtaSecondary}');
 
   if (siteSettings) {
+    const nav = document.getElementById('site-nav');
+    if (nav && siteSettings.logo?.asset?.url) {
+      const logoLink = nav.querySelector('a[href="/"]');
+      if (logoLink) {
+        logoLink.innerHTML = `<img src="${siteSettings.logo.asset.url}" alt="Tripcket" class="h-10 w-auto object-contain" />`;
+      }
+    }
+
     if (siteSettings.navbarLinks && siteSettings.navbarLinks.length > 0) {
-      const nav = document.getElementById('site-nav');
-      if (nav) {
-        const linksContainer = nav.querySelector('[class*="hidden md:flex"]');
-        if (linksContainer) {
-          const links = linksContainer.querySelectorAll('[data-nav-link]');
-          siteSettings.navbarLinks.forEach((link, i) => {
-            if (links[i]) {
-              links[i].textContent = link.title;
-              if (link.url) links[i].href = link.url;
-            }
-          });
-        }
+      const linksContainer = nav.querySelector('[class*="hidden md:flex"]');
+      if (linksContainer) {
+        const links = linksContainer.querySelectorAll('[data-nav-link]');
+        siteSettings.navbarLinks.forEach((link, i) => {
+          if (links[i]) {
+            links[i].textContent = link.title;
+            if (link.url) links[i].href = link.url;
+          }
+        });
       }
     }
 
@@ -56,7 +61,7 @@
     }
   }
 
-  const hero = await fetchFromSanity('*[_type == "hero"][0]');
+  const hero = await fetchFromSanity('*[_type == "hero"][0]{title,subtitle,badgeText,ctaButtons[]{"text","url","style"},image{asset->{url}}}');
   if (hero) {
     const heroSection = document.getElementById('inicio');
     if (heroSection) {
@@ -77,6 +82,11 @@
             if (hero.ctaButtons[i].url) btn.href = hero.ctaButtons[i].url;
           }
         });
+      }
+
+      const heroImageContainer = heroSection.querySelector('.placeholder-rect');
+      if (heroImageContainer && hero.image?.asset?.url) {
+        heroImageContainer.innerHTML = `<img src="${hero.image.asset.url}" alt="${hero.title || 'Hero'}" class="w-full h-full object-cover" />`;
       }
     }
   }
