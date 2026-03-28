@@ -66,6 +66,7 @@
   }
 
   const hero = await fetchFromSanity('*[_type == "hero"][0]{title,subtitle,badgeText,ctaButtons[]{"text","url","style"},image}');
+  console.log('Hero data:', JSON.stringify(hero, null, 2));
   if (hero) {
     const heroSection = document.getElementById('inicio');
     if (heroSection) {
