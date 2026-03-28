@@ -5,7 +5,7 @@ import { schemaTypes } from './sanity/schemas'
 export default defineConfig({
   name: 'tripcket',
   title: 'Tripcket CMS',
-  
+
   projectId: 'TU_PROJECT_ID',
   dataset: 'production',
 
