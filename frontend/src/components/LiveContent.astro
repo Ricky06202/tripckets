@@ -23,7 +23,7 @@ const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
     }
   }
 
-  const siteSettings = await fetchFromSanity('*[_type == "siteSettings"][0]{logo,navbarLinks,navbarCtaPrimary,navbarCtaSecondary}');
+  const siteSettings = await fetchFromSanity('*[_type == "siteSettings"][0]');
 
   if (siteSettings) {
     const nav = document.getElementById('site-nav');
@@ -68,7 +68,7 @@ const dataset = import.meta.env.PUBLIC_SANITY_DATASET || 'production';
     }
   }
 
-  const hero = await fetchFromSanity('*[_type == "hero"][0]{title,subtitle,badgeText,ctaButtons[]{"text","url","style"},image}');
+  const hero = await fetchFromSanity('*[_type == "hero"][0]{title,subtitle,badgeText,ctaButtons,image}');
   console.log('Hero data:', JSON.stringify(hero, null, 2));
   if (hero) {
     const heroSection = document.getElementById('inicio');
